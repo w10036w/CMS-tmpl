@@ -1,6 +1,6 @@
 const development = require('./dev')
-const production = require('./prod')
+const staging = require('./prod')
 
 module.exports = {
-  development, production
+  development, staging
 }[process.env.NODE_ENV || 'development']

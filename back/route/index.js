@@ -10,7 +10,7 @@ module.exports = app => {
   // welcome
   r.get('/', ctx => {
     return ctx.body = {
-      prod: process.env.NODE_ENV === 'production',
+      env: process.env.NODE_ENV,
       name: 'arkcms',
       graph: 'disabled',
       prefix,

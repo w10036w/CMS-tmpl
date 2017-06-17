@@ -5,10 +5,13 @@
       "script": "./index.js",
       "watch": true,
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "staging"
       },
       "env_development" : {
         "NODE_ENV": "development"
+      },
+      "env_production" : {
+        "NODE_ENV": "production"
       },
       "max_restarts": 10
     }
