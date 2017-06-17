@@ -2,7 +2,7 @@
   "apps": [
     {
       "name": "api",
-      "script": "index.js",
+      "script": "./index.js",
       "watch": true,
       "env": {
         "NODE_ENV": "production"
@@ -10,7 +10,7 @@
       "env_development" : {
         "NODE_ENV": "development"
       },
-      "log_date_format": "YYYY - MM - DD HH: mm Z"
+      "max_restarts": 10
     }
   ]
 }

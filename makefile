@@ -107,8 +107,8 @@ start: start-front start-back
 
 start-back:
 	@echo "start back"
-	@NODE_ENV=production
-	@pm2 start back/index.js --name="api"
+	@cd back && pm2 start process.json
+	@cd ..
 start-front:
 	@echo "start front"
 	@NODE_ENV=production pm2 start front/index.js --name="front" --watch -i 4
