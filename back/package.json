@@ -31,7 +31,6 @@
     "test:report": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --compilers js:babel-core/register --recursive --reporter mochawesome"
   },
   "dependencies": {
-    "bcrypt": "latest",
     "bluebird": "^3.4.6",
     "graphql": "^0.10.1",
     "jsonwebtoken": "^7.1.9",
