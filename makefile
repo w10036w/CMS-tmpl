@@ -107,11 +107,11 @@ start: start-front start-back
 
 start-back:
 	@echo "start back"
-	@cd back && pm2 start pm2.json --env production
+	@NODE_ENV=production
+	@pm2 start back/index.js --name="api"
 start-front:
 	@echo "start front"
-	@cd front && pm2 start pm2.json --env production
-	@cd ..
+	@NODE_ENV=production pm2 start front/index.js --name="front" --watch -i 4
 
 dev: dev-back dev-front
 dev-back:
