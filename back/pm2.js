@@ -2,7 +2,7 @@ module.exports = {
   "apps": [{
     "name": "back",
     "script": "index.js",
-    "instances"  : 4,
+    "instances"  : 1,
     "exec_mode"  : "cluster",
     "watch": true,
     "env": {
