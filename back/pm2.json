@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "back",
+      "script": "index.js",
+      "watch": true,
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "env_production" : {
+        "NODE_ENV": "production"
+      },
+      "log_date_format": "YYYY - MM - DD HH: mm Z"
+    }
+  ]
+}
