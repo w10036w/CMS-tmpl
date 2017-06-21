@@ -5,6 +5,7 @@ const bProd = process.env.NODE_ENV !== 'development'
 const conf = {
   dev: { 
     appenders: [{ type: 'console' }],
+    replaceConsole: true
   },
   prod: {
     appenders: [{
