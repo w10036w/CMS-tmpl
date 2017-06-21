@@ -6,7 +6,7 @@ const path = require('path');
 global.Promise = require("bluebird")
 //global.resolve = file => path.resolve(__dirname, file)
 global.resolve = name => require(`${__dirname}/${name}`);
-global.log = resolve('util/log')
+global.log = console
 const conf = resolve('conf')
 const mongo = resolve('mongo');
 const { logger } = resolve('middleware/resp')
