@@ -29,7 +29,7 @@ endif
 
 all: prep service clean install service-start start
 
-prep: prep-nginx prep-certbot prep-mongo prep-nodejs prep-pm2
+prep: prep-nginx prep-certbot prep-mongo prep-redis prep-nodejs prep-pm2
 NGINX := $(shell nginx 2>/dev/null)
 prep-nginx:
 ifndef NGINX
@@ -61,6 +61,13 @@ ifndef MONGO
 	@apt-get update && apt-get install -y mongodb-org
 endif
 	@echo "$(C_GREEN)mongodb installed$(C_RESET)"
+REDIS := $(shell redis-cli monitor)
+prep-redis:
+ifndef REDIS
+	@echo "$(C_BLUE)redis installing...$(C_RESET)"
+	@apt-get install redis-server
+endif 
+	@echo "$(C_GREEN)redis installed$(C_RESET)"
 NODEJS := $(shell node -v)
 prep-nodejs:
 ifndef NODEJS
@@ -77,9 +84,16 @@ ifndef PM2
 endif
 	@echo "$(C_GREEN)pm2 installed$(C_RESET)"
 
+conf-redis:
+	@nano /etc/redis/redis.conf
+#add:
+# maxmemory 128mb
+# maxmemory-policy allkeys-lru
 service-start:
 	@service mongod start
 	@nginx
+	@systemctl restart redis-server.service
+	@systemctl enable redis-server.service
 service-end:
 	@service mongod stop
 	@nginx -s stop
@@ -103,34 +117,42 @@ install:
 	@cd ..
 	@echo	"npm install production complete"
 
-start: start-front start-back
-
-start-back:
-	@echo "start back"
+start: start-api start-admin start-app 
+start-api:
+	@echo "start api"
 	@cd back && pm2 start process.json
 	@cd ..
-start-front:
-	@echo "start front"
-	@NODE_ENV=production pm2 start front/index.js --name="front" --watch -i 4
-
-dev: dev-back dev-front
-dev-back:
-	@echo "start back"
-	@cd back && pm2 start pm2.json
+start-app:
+	@echo "start app"
+	@cd front && pm2 start process.json
 	@cd ..
-dev-front:
-	@echo "start front"
-	@cd front && pm2 start pm2.json
+start-admin:
+	@echo "start admin"
+	@cd admin && pm2 start process.json
+	@cd ..
+
+dev: dev-api dev-admin dev-app
+dev-api:
+	@echo "dev api"
+	@cd back && pm2 start process.json --env development
+	@cd ..
+dev-app:
+	@echo "dev app"
+	@cd front && pm2 start process.json --env development
+	@cd ..
+dev-admin:
+	@echo "dev admin"
+	@cd admin && pm2 start process.json --env development
 	@cd ..
 
 end:
-	@pm2 stop back front
+	@pm2 stop api admin app
 
 kill:
 	@pm2 kill
 
 restart:
-	@pm2 restart back front
+	@pm2 restart api admin front
 
 version:
 	@nginx -v

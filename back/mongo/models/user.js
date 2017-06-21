@@ -27,14 +27,14 @@ schema.virtual('password')
     this._password = password;
     this.salt = this.makeSalt();
     this.hashed_password = this.encrypt(password)
+    console.log(password, this._password, this.hashed_password)
   }).get(function () {
-  return this._password
-});
+    return this._password
+  });
 schema.methods = {
   verify (plainText) {
     const encrypted = this.encrypt(plainText);
     const hashed = this.hashed_password;
-    console.log(encrypted, hashed)
     return encrypted === hashed;
   },
   encrypt (password) {

@@ -12,6 +12,7 @@ const login = async (ctx, next) => {
     let _user = await User.findOne({ username })
     if (_user && _user.verify(password) && !_user.hidden) {
       user = {
+        _id: _user._id,
         username: _user.username,
         role: _user.role,
       }

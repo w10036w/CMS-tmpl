@@ -23,7 +23,7 @@ module.exports = {
     } catch (err) { return false }
   },
 
-  bPermitted (token, role) {
+  bPermitted (token, role='admin') {
     if (!token) return false
     try {
       return jwt.verify(token, secret)

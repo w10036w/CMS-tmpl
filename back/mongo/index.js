@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
 const models = require('./models');
-//const actions = require('./actions');
-//const io = require('./io');
+const actions = require('./actions');
+const filter = require('./filter')
+const io = require('./io');
 
 const connect = (uri) => {
   mongoose.Promise = Promise;
@@ -20,5 +21,5 @@ const connect = (uri) => {
 }
 
 module.exports = {
-  connect, models//, actions, io
+  connect, models, actions, filter, io
 };

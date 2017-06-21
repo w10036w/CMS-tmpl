@@ -10,17 +10,16 @@ module.exports = app => {
   // welcome
   r.get('/', ctx => {
     return ctx.body = {
-      env: process.env.NODE_ENV,
+      env: app.env,
       name: 'arkcms',
-      graph: 'disabled',
       prefix,
-      methodology: 'jwt'
+      authentication: 'jwt'
     }
   })
   // use graph api
   // require('./graph')(r);
   // use rest api
-  // require('./rest/')(r)
+  require('./rest/')(r)
   // cdn, e.g. qiniu
   // require('./cdn')(r)
 
