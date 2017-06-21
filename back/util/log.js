@@ -1,7 +1,7 @@
 const log4js = require('log4js');
 
 const { name } = resolve('package')
-const bProd = process.env.NODE_ENV === 'production'
+const bProd = process.env.NODE_ENV !== 'development'
 const conf = {
   dev: { 
     appenders: [{ type: 'console' }],
