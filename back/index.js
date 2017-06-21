@@ -1,18 +1,16 @@
 // non-dep deps
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser')
-const fs = require('fs');
-const path = require('path');
-const winston = require('winston');
 global.Promise = require("bluebird");
 //global.resolve = file => path.resolve(__dirname, file)
 global.resolve = name => require(`${__dirname}/${name}`);
 // pm2 conflicts with log4js
-winston.add(winston.transports.File, { filename: './logs/app.log' });
-global.log = winston
+//winston.add(winston.transports.File, { filename: './logs/app.log' });
+global.log = resolve('util/log')
 const { logger } = resolve('middleware/resp')
+
 global.conf = require('./conf')
-const mongo = resolve('./mongo');
+const mongo = require('./mongo');
 
 const app = new Koa();
 app.use(logger);
