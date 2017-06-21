@@ -20,8 +20,7 @@ module.exports = app => {
   // require('./graph')(r);
   // use rest api
   require('./rest/')(r)
-  // cdn, e.g. qiniu
-  // require('./cdn')(r)
+  require('./qiniu')(r)
 
   app.use(r.routes()).use(r.allowedMethods())
 }

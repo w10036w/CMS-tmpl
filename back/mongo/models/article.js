@@ -14,7 +14,6 @@ const schema = new Schema(Object.assign({
   type: { type: String, default: 'md' },
   thumbnail: String,
   content: String,
-  galleries: [ObjectId],
   tags: [ObjectId],
   category: { type: ObjectId, required: true },
   allowComment: { type: Boolean, default: true },

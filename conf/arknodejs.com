@@ -60,9 +60,9 @@ server {
   }
 
   # CSS and Javascript
-  #location ~* \.(?:css|js)$ {
-  #  expires 1y;
-  #  access_log off;
-  #  add_header Cache-Control "public";
-  #}
+  location ~* \.(jpg|jpeg|gif|css|png|js|ico)$ {
+    expires 7d;
+    access_log off;
+    add_header Cache-Control "public";
+  }
 }

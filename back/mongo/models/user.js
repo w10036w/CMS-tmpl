@@ -27,7 +27,6 @@ schema.virtual('password')
     this._password = password;
     this.salt = this.makeSalt();
     this.hashed_password = this.encrypt(password)
-    console.log(password, this._password, this.hashed_password)
   }).get(function () {
     return this._password
   });
@@ -56,7 +55,6 @@ schema.methods = {
 // schema.virtual('password')
 //   .set(function (password) {
 //     this._password = password
-//     log.debug(password)
 //     this.hashed_password = this.encryptPassword(password)
 //   }).get(function () {
 //   return this._password

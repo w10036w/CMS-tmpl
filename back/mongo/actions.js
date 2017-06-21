@@ -50,9 +50,7 @@ module.exports = model => ({
   // POST 201
   create: async ctx => {
     let body = ctx.request.body
-    
     const j = await io(model).create(body)
-    console.log('j: ', j)
     if (j.code!==201) return ctx.throw(j.code, j.note)
     ctx.status = 201
     ctx.set('Location', `/${model.modelName}/${j.data._id}`)
