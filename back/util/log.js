@@ -1,24 +1,11 @@
 const log4js = require('log4js');
-
 const { name } = resolve('package')
 const bProd = process.env.NODE_ENV !== 'development'
 const conf = {
-  dev: { 
-    appenders: [{ type: 'console' }],
-    replaceConsole: true
-  },
-  prod: {
-    appenders: [{
-      type: 'file',
-      filename: './logs/app.log',
-      category: name, 
-      maxLogSize: 204800
-    }]
-  }
+  appenders: [{ type: 'console' }],
+  replaceConsole: true
 }
-log4js.configure(bProd ? conf.prod : conf.dev)
-
+log4js.configure(conf)
 const log = log4js.getLogger(name);
 //log.setLevel(bProd ? 'DEBUG' : 'ERROR');
-
 module.exports = log;
