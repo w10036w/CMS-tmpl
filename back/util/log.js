@@ -9,7 +9,7 @@ const conf = {
   prod: {
     appenders: [{
       type: 'file',
-      filename: 'logs/app.log',
+      filename: '../logs/app.log',
       category: name, 
       maxLogSize: 204800
     }]
