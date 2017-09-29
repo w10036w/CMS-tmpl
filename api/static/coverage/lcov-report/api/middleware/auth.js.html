@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for api/middleware/auth.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">api/middleware</a> auth.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30.3% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>20/66</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">9.09% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>6/66</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">33.33% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>2/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30.77% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>20/65</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { json } = resolve('util/http')
+//const cache = resolve('cache')
+const { getToken, verify, decode } = resolve('util/token')
+&nbsp;
+let token = '', ctxUser, tokenUser
+&nbsp;
+exports.bSigned = (ctx, next) =&gt; {
+  token = getToken(ctx)
+  if (verify(token)) {
+    tokenUser = decode(token).payload
+    ctx.state.user = tokenUser
+    return next ? next() : <span class="branch-1 cbranch-no" title="branch not covered" >true</span>
+  }
+  return ctx.throw(401, { user: null })
+}
+&nbsp;
+exports.bAdmin = (ctx, next) =&gt; {
+  ctxUser = ctx.state.user
+  token = getToken(ctx)
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (ctxUser)  {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (ctxUser.role === 'admin')
+      return next ? next() : <span class="branch-1 cbranch-no" title="branch not covered" >true</span>
+  } else <span class="cstat-no" title="statement not covered" >if (verify(token)) {</span>
+<span class="cstat-no" title="statement not covered" >    tokenUser = decode(token).payload</span>
+<span class="cstat-no" title="statement not covered" >    if (tokenUser.role === 'admin') {</span>
+<span class="cstat-no" title="statement not covered" >      ctx.state.user = tokenUser</span>
+<span class="cstat-no" title="statement not covered" >      return next ? next() : true</span>
+    }
+  }
+<span class="cstat-no" title="statement not covered" >  return ctx.throw(403, { user: ctx.state.user })</span>
+}
+exports.bAdminOrEditor = <span class="fstat-no" title="function not covered" >(c</span>tx, next) =&gt; {
+<span class="cstat-no" title="statement not covered" >  ctxUser = ctx.state.user</span>
+<span class="cstat-no" title="statement not covered" >  token = getToken(ctx)</span>
+<span class="cstat-no" title="statement not covered" >  if (ctxUser)  {</span>
+<span class="cstat-no" title="statement not covered" >    if (ctxUser.role === 'admin' || ctxUser.role === 'editor')</span>
+<span class="cstat-no" title="statement not covered" >      return next ? next() : true</span>
+  } else <span class="cstat-no" title="statement not covered" >if (verify(token)) {</span>
+<span class="cstat-no" title="statement not covered" >    tokenUser = decode(token).payload</span>
+<span class="cstat-no" title="statement not covered" >    if (tokenUser.role === 'admin' || tokenUser.role === 'editor') {</span>
+<span class="cstat-no" title="statement not covered" >      ctx.state.user = tokenUser</span>
+<span class="cstat-no" title="statement not covered" >      return next ? next() : true</span>
+    }
+  }
+<span class="cstat-no" title="statement not covered" >  return ctx.throw(403, { user: ctx.state.user })</span>
+}
+exports.bAdminOrSelf = <span class="fstat-no" title="function not covered" >(c</span>tx, next) =&gt; {
+<span class="cstat-no" title="statement not covered" >  ctxUser = ctx.state.user</span>
+  const uid = <span class="cstat-no" title="statement not covered" >ctx.params.id</span>
+<span class="cstat-no" title="statement not covered" >  if (!uid) <span class="cstat-no" title="statement not covered" >return ctx.throw(400, 'missing params: id')</span></span>
+<span class="cstat-no" title="statement not covered" >  token = getToken(ctx)</span>
+<span class="cstat-no" title="statement not covered" >  if (ctxUser)  {</span>
+<span class="cstat-no" title="statement not covered" >    if (ctxUser.role === 'admin' || ctxUser._id === uid)</span>
+<span class="cstat-no" title="statement not covered" >      return next ? next() : true</span>
+  } else <span class="cstat-no" title="statement not covered" >if (verify(token)) {</span>
+<span class="cstat-no" title="statement not covered" >    tokenUser = decode(token).payload</span>
+<span class="cstat-no" title="statement not covered" >    if (tokenUser.role === 'admin' || tokenUser._id === uid) {</span>
+<span class="cstat-no" title="statement not covered" >      ctx.state.user = tokenUser</span>
+<span class="cstat-no" title="statement not covered" >      return next ? next() : true</span>
+    }
+  }
+<span class="cstat-no" title="statement not covered" >  return ctx.throw(401, 'access denied', { user: ctx.state.user })</span>
+}
+&nbsp;
+exports.bEditor = <span class="fstat-no" title="function not covered" >(c</span>tx, next) =&gt; {
+<span class="cstat-no" title="statement not covered" >  ctxUser = ctx.state.user</span>
+<span class="cstat-no" title="statement not covered" >  token = getToken(ctx)</span>
+<span class="cstat-no" title="statement not covered" >  if (ctxUser)  {</span>
+<span class="cstat-no" title="statement not covered" >    if (ctxUser.role === 'editor')</span>
+<span class="cstat-no" title="statement not covered" >      return next ? next() : true</span>
+  } else <span class="cstat-no" title="statement not covered" >if (verify(token)) {</span>
+<span class="cstat-no" title="statement not covered" >    tokenUser = decode(token).payload</span>
+<span class="cstat-no" title="statement not covered" >    if (tokenUser.role === 'editor') {</span>
+<span class="cstat-no" title="statement not covered" >      ctx.state.user = tokenUser</span>
+<span class="cstat-no" title="statement not covered" >      return next ? next() : true</span>
+    }
+  }
+<span class="cstat-no" title="statement not covered" >  return ctx.throw(401, 'access denied', { user: ctx.state.user })</span>
+}
+&nbsp;
+exports.bSignOff = <span class="fstat-no" title="function not covered" >(c</span>tx, next) =&gt; {
+<span class="cstat-no" title="statement not covered" >  token = getToken(ctx)</span>
+<span class="cstat-no" title="statement not covered" >  if (!verify(token))</span>
+<span class="cstat-no" title="statement not covered" >    return next ? next() : true</span>
+  else <span class="cstat-no" title="statement not covered" >return ctx.redirect('/') </span>// go homepage if signed
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Sep 24 2017 17:37:16 GMT+0800 (+08)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

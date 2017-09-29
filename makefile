@@ -1,8 +1,11 @@
-## for Ubuntu 16.04
-# apt-get install make
+## for Mac
 
 # setup vars
-DOMAIN = arknodejs.com
+PATH_NGINX = /usr/local/etc/nginx
+PATH_WWW = /usr/local/var/www
+
+ENV = com
+DOMAIN = arknodejs.$(ENV)
 
 COLORS:=$(shell tput colors 2> /dev/null)
 ifeq ($(COLORS), 256)
@@ -27,58 +30,62 @@ else ifeq ($(COLORS), 16)
     C_WHITE=\033[1;37m
 endif
 
+hello:
+	@echo "hello $(DOMAIN)"
+# profile:
+# @cp -b /var/www/arknodejs/config/profile.arknodejs.com /etc/nginx/sites-available
+# @ln -s /etc/nginx/sites-available/profile.arknodejs.com /etc/nginx/sites-enabled/profile.arknodejs.com
+
 all: prep service clean install service-start start
 
 prep: prep-nginx prep-certbot prep-mongo prep-redis prep-nodejs prep-pm2
-NGINX := $(shell nginx 2>/dev/null)
+
 prep-nginx:
-ifndef NGINX
+ifeq (, $(shell which nginx))
 	@echo "$(C_BLUE)nginx installing...$(C_RESET)"
 	@apt-get update
 	@apt-get install nginx
 endif
 	@echo "$(C_GREEN)nginx installed$(C_RESET)"
-	@cp -b /var/www/arknodejs/config/arknodejs.com /etc/nginx/sites-available/
-	@ln -s /etc/nginx/sites-available/arknodejs.com /etc/nginx/sites-enabled/arknodejs.com
+	@cp ${PATH_WWW}/$(DOMAIN)/conf/$(DOMAIN) ${PATH_NGINX}/sites/${DOMAIN}
 	@echo "$(C_GREEN)nginx configured$(C_RESET)"
-CERTBOT := $(shell certbot 2>/dev/null)
+
 prep-certbot:
-ifndef CERTBOT
+ifeq (, $(shell which certbot))
 	@echo "$(C_BLUE)certbot installing...$(C_RESET)"
-	@apt-get install software-properties-common
-	@add-apt-repository ppa:certbot/certbot
-	@apt-get update && apt-get install certbot
+	@brew update && brew install certbot
 endif
 	@echo "$(C_GREEN)certbot installed$(C_RESET)"
-	@certbot certonly --standalone -d $(DOMAIN)
+	@sudo certbot certonly --standalone -d $(DOMAIN)
 	@echo "$(C_GREEN)certbot certificate generated$(C_RESET)"
-MONGO := $(shell mongod)
+	
 prep-mongo:
-ifndef MONGO
+ifeq (, $(shell which mongod))
 	@echo "$(C_BLUE)mongodb installing...$(C_RESET)"
 	@apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
 	@echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
 	@apt-get update && apt-get install -y mongodb-org
 endif
 	@echo "$(C_GREEN)mongodb installed$(C_RESET)"
-REDIS := $(shell redis-cli monitor)
+
 prep-redis:
-ifndef REDIS
+# REDIS := $(shell redis-server)
+ifeq (, $(shell which redis-server))
 	@echo "$(C_BLUE)redis installing...$(C_RESET)"
 	@apt-get install redis-server
 endif 
 	@echo "$(C_GREEN)redis installed$(C_RESET)"
-NODEJS := $(shell node -v)
+
 prep-nodejs:
-ifndef NODEJS
+ifeq (, $(shell which node))
 	@echo "$(C_BLUE)nodejs installing...$(C_RESET)"
 	@curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 	@apt-get install -y nodejs
 endif
 	@echo "$(C_GREEN)nodejs installed$(C_RESET)"
-PM2 := $(shell pm2 2>/dev/null)
+
 prep-pm2:
-ifndef PM2
+ifeq (, $(shell which pm2))
 	@echo "$(C_GREEN)pm2 installing...$(C_RESET)"
 	@npm i -g pm2
 endif
@@ -98,43 +105,42 @@ service-end:
 	@service mongod stop
 	@nginx -s stop
 
-test: 
+test-nginx: 
 	@echo "<-- nginx test start -->"
-	@systemctl status nginx
 	@nginx -t
 	@echo "<--  nginx test end  -->"
 
 clean:
 	@rm -rf admin/node_modules
-	@rm -rf back/node_modules
+	@rm -rf api/node_modules
 	@rm -rf front/node_modules
 	@echo	"node_modules clean complete"
 
 install:
-	@cd back && npm i --only=production
+	@cd api && npm i --only=production
 	@cd ..
 	@cd front && npm i --only=production
 	@cd ..
 	@echo	"npm install production complete"
 
 start: start-api start-admin start-app 
+start-admin:
+	@echo "start admin"
+	@cd admin && pm2 start pm2-prod.json
+	@cd ..
 start-api:
 	@echo "start api"
-	@cd back && pm2 start process.json
+	@cd api && pm2 start pm2-prod.json
 	@cd ..
 start-app:
 	@echo "start app"
-	@cd front && pm2 start process.json
-	@cd ..
-start-admin:
-	@echo "start admin"
-	@cd admin && pm2 start process.json
+	@cd app && pm2 start process.json
 	@cd ..
 
 dev: dev-api dev-admin dev-app
 dev-api:
 	@echo "dev api"
-	@cd back && pm2 start process.json --env development
+	@cd api && pm2 start pm2-dev.json
 	@cd ..
 dev-app:
 	@echo "dev app"
@@ -142,7 +148,7 @@ dev-app:
 	@cd ..
 dev-admin:
 	@echo "dev admin"
-	@cd admin && pm2 start process.json --env development
+	@cd admin && pm2 start pm2-dev.json
 	@cd ..
 
 end:

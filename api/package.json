@@ -1,0 +1,70 @@
+{
+  "name": "arkcms-api",
+  "version": "1.0.0",
+  "description": "A production-ready node.js CMS skeleton built on koa2, mongodb, redis, using mocha-chai-is to do unit test and documented with swagger",
+  "keywords": [
+    "koa2",
+    "jwt",
+    "mongoose",
+    "redis",
+    "qiniu",
+    "log4js",
+    "cms",
+    "jsdoc",
+    "swagger",
+    "mocha",
+    "istanbul",
+    "machawesome"
+  ],
+  "author": "Ark <w10036w@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/w10036w/arknodejs"
+  },
+  "config": {
+    "debug": false,
+    "port": 8000,
+    "expireIn": "90d"
+  },
+  "scripts": {
+    "i:prod": "npm install --only=production",
+    "dev": "nodemon index.js",
+    "dropdb": "node drop.js",
+    "start": "NODE_ENV=production node index",
+    "test": "TEST=true ./node_modules/.bin/_mocha test/unit --recursive",
+    "test:watch": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --recursive --bail --watch",
+    "test:report": "TEST=true ./node_modules/.bin/istanbul cover --dir=static/coverage ./node_modules/.bin/_mocha test/unit -- --bail --recursive --reporter mochawesome --reporter-options reportDir=static/mocha-report",
+    "test:nyc": "nyc ./node_modules/.bin/_mocha test/unit --recursive"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "jsonwebtoken": "^7.1.9",
+    "kcors": "^2.2.1",
+    "koa": "^2.0.1",
+    "koa-bodyparser": "^3.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-redis": "^3.0.0",
+    "koa-router": "^7.0.1",
+    "koa-static": "^4.0.1",
+    "log4js": "^0.6.38",
+    "mongoose": "^4.5.9",
+    "qiniu": "^6.1.13",
+    "redis": "^2.7.1",
+    "winston": "^2.3.1"
+  },
+  "engines": {
+    "node": ">=7.6.0",
+    "npm": ">=4.0.0"
+  },
+  "devDependencies": {
+    "axios": "^0.16.2",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "istanbul": "^1.1.0-alpha.1",
+    "mocha": "^3.5.3",
+    "mochawesome": "^2.3.1",
+    "nyc": "^11.2.1",
+    "swagger-jsdoc": "^1.9.7"
+  }
+}

@@ -1,5 +1,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
+const { port, host } = require('../package').config
+const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   build: {
@@ -19,11 +21,11 @@ module.exports = {
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report
+    bundleAnalyzerReport: process.env.npm_config_report,
   },
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -33,6 +35,9 @@ module.exports = {
     // (https://github.com/webpack/css-loader#sourcemaps)
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
-    cssSourceMap: false
-  }
+    cssSourceMap: false,
+    domain: 'https://admin.arknodejs.dev'
+  },
+  apiHost: `//api.${host}.${isProd?'com':'dev'}`,
+  appHost: `//${host}.${isProd?'com':'dev'}`
 }

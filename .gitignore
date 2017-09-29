@@ -6,28 +6,34 @@
 .vscode
 
 # prod config
-/back/conf/prod.js
+/api/conf/prod.js
 
 # node_modules
+/node_modules/
 /admin/node_modules/
-/front/node_modules/
-/back/node_modules/
+/api/node_modules/
+/app/node_modules/
+/profile/node_modules/
 
 # logs
+/api/logs/
 
 # dist
-#/admin/dist/
-#/front/dist/
-#/back/dist/
+/admin/dist/
+#/app/dist/
+/profile/dist/
 
-# test
-/admin/test/
-/front/test/
-/back/test/
-
-# data
+# fake data
 /admin/data/
-/front/data/
-/back/data/
+/app/data/
+/api/data/
 
 # static
+
+# reports
+/api/coverage/
+/api/mochawesome-report/
+/admin/coverage/
+/admin/mochawesome-report/
+/app/coverage/
+/app/mochawesome-report/

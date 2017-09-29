@@ -1,6 +1,6 @@
-# admin
+# arkcms-admin
 
-> admin - arkcms
+> admin portal of arkcms
 
 ## Build Setup
 

@@ -4,14 +4,13 @@ server {
   return         301 https://$server_name$request_uri;
 }
 
-proxy_cache_path /etc/nginx/tmp levels=1:2 keys_zone=my_zone:10m inactive=60m;
+proxy_cache_path /etc/nginx/tmp levels=1:2 keys_zone=arknodejs:10m inactive=60m;
 proxy_cache_key "$scheme$request_method$host$request_uri";
 
 server {
+  server_name  arknodejs.com;
   charset utf-8;
   listen       443 ssl http2 fastopen=3 reuseport;
-  server_name  arknodejs.com;
-
   ssl                   on;
   ssl_certificate /etc/letsencrypt/live/arknodejs.com/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/arknodejs.com/privkey.pem;
@@ -19,9 +18,9 @@ server {
   #add_header X-Frame-Options DENY;
   #add_header X-Content-Type-Options nosniff;
 
+  # main site
   location / {
     proxy_pass http://127.0.0.1:8002;
-    # proxy_pass http://127.0.0.1:8003;
     proxy_set_header    X-Forwarded-Proto-Version $http2;
     proxy_set_header    Upgrade                   $http_upgrade;
     proxy_set_header    Connection                'upgrade';
@@ -39,16 +38,18 @@ server {
   location /api {
     proxy_pass http://127.0.0.1:8000;
   }
-  location /ws {
-    proxy_pass http://127.0.0.1:8001;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-  }
+  
   location /admin {
     rewrite ^/admin(.*) /$1 break;
     proxy_pass http://127.0.0.1:8003;
   }
+
+  #_location /ws {
+  #_  proxy_pass http://127.0.0.1:8001;
+  #_  proxy_http_version 1.1;
+  #_  proxy_set_header Upgrade $http_upgrade;
+  #_ proxy_set_header Connection "upgrade";
+  #_}
 
   location ~ /\.(ht|svn|git|idea|vscode){
     deny all;

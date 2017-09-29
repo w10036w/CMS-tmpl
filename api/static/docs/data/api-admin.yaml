@@ -1,0 +1,1175 @@
+# this is an example of the Uber API
+# as a demonstration of an API spec in YAML
+swagger: "2.0"
+info:
+  title: Arknodejs API (from YML)
+  description: "API design with pm2-koa2-mongoose-log4js(-redis) \n\n Latest admin token: \neyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OWI0M2Q3MDRjNzFiNjgxMmJlMmQwMmQiLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTA1MDYxMTg5fQ.4lSIOpNXTh2TeWObWwlUxEUWO53Z_FMWWX-QpDiWR8A \n\nLastest editor token: \n"
+  version: "1.0.0"
+# the domain of the service
+# host: api.arknodejs.com
+host: api.arknodejs.dev
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+# basePath: /admin
+# securityDefinitions:
+#   JWT:
+#     description: jsonwebtoken authentication
+#     type: apiKey
+#     name: Authorization
+#     in: header
+#     value: 
+
+produces:
+  - application/json
+  
+paths:
+## Auth
+# /route/auth.js
+  /login:
+    post:
+      summary: Login to the application
+      operationId: login
+      tags: [Auth]
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: Logged
+          schema:
+            $ref: '#/definitions/Logged'
+          examples:
+            application/json: |-
+              {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OWJlNTA2MjIxNjMyMmM0YTZjMGE2YjgiLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTA1OTE4NzEwfQ.7OfcHfBzwjutTwc4Qx3GD1QjSEaekggdAqHUUwi_fXo",
+                "_id": "59be5062216322c4a6c0a6b8",
+                "username": "admin",
+                "role": "admin"
+              }
+        405:
+          description: invalid username or password
+  /verify:
+    get:
+      summary: Verify the token in header[authorization]
+      tags: [Auth]
+      parameters:
+        - name: Authorization
+          description: token
+          in: header
+          required: true
+          type: string
+          value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OWJlNTA2MjIxNjMyMmM0YTZjMGE2YjgiLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTA1NjQ0ODM3fQ.bGa68moYADDaEShKAlIKy4leFZxjIqaSB9vjdUCb-hc
+      responses:
+        200:
+          description: Logged
+          schema:
+            $ref: '#/definitions/Logged'
+        401:
+          description: invalid token
+  
+# REST
+# /route/rest/index.js
+# /route/rest/public.js
+## Users
+  /admin/user:
+    post:
+      summary: "[admin] Create a new user"
+      tags: [Users]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin only
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        201:
+          description: new User
+          schema:
+            $ref: '#/definitions/User'
+        401:
+          description: Unauthorized
+        405:
+          description: missing or invalid parameters
+    get:
+      summary: '[admin] Return a user matching the criteria'
+      tags: [Users]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin only
+        - name: criteria
+          in: query
+          type: string
+          required: true
+          value: '{"username":"admin"}'
+        - name: select
+          in: query
+          type: string
+          description: "empty or '{attr1} {attr2} ...'"
+      responses:
+        200:
+          description: User
+          schema: 
+            $ref: '#/definitions/User'
+        204:
+          description: no matched user
+        400:
+          description: missing or invalid required parameters
+        401:
+          description: signed user only
+        403:
+          description: admin and editor only
+    delete:
+      summary: '[admin] Delete a user matching the query (e.g. _id|username)'
+      tags: [Users]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin only
+        - name: _id
+          in: query
+          type: objectId
+        - name: username
+          in: query
+          type: string
+      responses:
+        204:
+          description: deleted successfully
+        400:
+          description: invalid syntax
+        405:
+          description: invalid query
+
+  /admin/user/{id}:
+    get:
+      summary: '[admin] Return a user matching the id'
+      tags: [Users]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin only
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: select
+          in: query
+          type: string
+          description: "empty or '{attr1} {attr2} ...'"
+      responses:
+        200:
+          description: User
+          schema: 
+            $ref: '#/definitions/User'
+        204:
+          description: no matched user
+        400:
+          description: invalid syntax
+        401:
+          description: signed user only
+        403:
+          description: admin and editor only
+        405:
+          description: missing or invalid required parameters
+    patch:
+      summary: '[admin/self] Update a user matching the id'
+      tags: [Users]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin and user self only
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: updated User
+          schema: 
+            $ref: '#/definitions/User'
+        400:
+          description: invalid syntax
+
+  /admin/users:
+    get:
+      summary: '[admin] Return User[] matching the criteria'
+      tags: [Users]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+        - name: criteria
+          in: query
+          type: string
+          description: '{"username":"admin"}'
+        - name: select
+          in: query
+          type: string
+          description: "empty or '{attr1} {attr2} ...'"
+        - name: limit
+          in: query
+          type: number
+          example: 20
+        - name: skip
+          in: query
+          type: number
+          example: 0
+        - name: sort
+          in: query
+          description: -username
+        - name: count
+          in: query
+          description: if only need to return the count
+      responses:
+        200:
+          description: User[]
+          schema:
+            $ref: '#/definitions/User'
+        401:
+          description: Unauthorized        
+    delete:
+      summary: '[admin] Delete users by ids(body)'
+      tags: [Users]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin only
+        - name: ids
+          in: body
+          required: true
+          type: array
+      responses:
+        204:
+          description: deleted successfully
+        400:
+          description: invalid syntax
+        405:
+          description: 'invalid body: ids'
+
+  /user:
+    get:
+      summary: Input _id or username or email, Output User (except admin and hidden)
+      tags: [Users]
+      parameters:
+        - name: _id
+          in: query
+          type: string
+        - name: username
+          in: query
+          type: string
+          value: admin
+        - name: email
+          in: query
+          type: string
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/User'
+        204:
+          description: Success, no matched user
+        405:
+          description: missing or invalid required query
+
+## Articles
+  /admin/articles:
+    get:
+      summary: '[admin/editor] Return Article[] matching the criteria'
+      tags: [Articles]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+        - name: criteria
+          in: query
+          type: string
+          description: '{"key":"value"}'
+        - name: select
+          in: query
+          type: string
+          example: "_id title path author category tags summary"
+        - name: populate
+          in: query
+          type: string
+          example: '{"author": "_id username displayName avatar", "category": "_id name path", "tags": "_id name path" }'
+        - name: limit
+          in: query
+          type: number
+          example: 20
+        - name: skip
+          in: query
+          type: number
+          example: 0
+        - name: sort
+          in: query
+          description: -category
+        - name: count
+          in: query
+          description: if only need to return the count
+      responses:
+        200:
+          description: Article[]
+          schema:
+            $ref: '#/definitions/Article'
+        401:
+          description: Unauthorized        
+    delete:
+      summary: '[admin/editor] Delete articles by ids(body)'
+      tags: [Articles]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: ids
+          in: body
+          required: true
+          type: array
+      responses:
+        204:
+          description: deleted successfully
+        400:
+          description: invalid syntax
+        405:
+          description: 'invalid body: ids'
+  /admin/article:
+    post:
+      summary: "[admin/editor] Create a new article"
+      tags: [Articles]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Article'
+      responses:
+        201:
+          description: new Article
+          schema:
+            $ref: '#/definitions/Article'
+        401:
+          description: Unauthorized
+        405:
+          description: missing or invalid parameters
+    get:
+      summary: '[admin/editor] Return an Article matching the criteria'
+      tags: [Articles]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: criteria
+          in: query
+          type: string
+          required: true
+          value: '{"field":"value"}'
+        - name: populate
+          in: query
+          type: string
+          example: '{"author": "_id username displayName avatar", "category": "_id name path", "tags": "_id name path" }'
+        - name: select
+          in: query
+          type: string
+          description: "empty or '{attr1} {attr2} ...'"
+      responses:
+        200:
+          description: Article
+          schema: 
+            $ref: '#/definitions/Article'
+        204:
+          description: no matched Article
+        400:
+          description: missing or invalid required parameters
+        401:
+          description: signed user only
+        403:
+          description: admin and editor only
+    delete:
+      summary: '[admin/editor] Delete an Article matching the query (e.g. _id|path|title)'
+      tags: [Articles]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: _id
+          in: query
+          type: string
+        - name: path
+          in: query
+          type: string
+        - name: title
+          in: query
+          type: string
+      responses:
+        204:
+          description: deleted successfully
+        400:
+          description: invalid syntax
+        405:
+          description: invalid query
+  /admin/article/{id}:
+    get:
+      summary: '[admin/editor] Return an Article matching the id'
+      tags: [Articles]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: populate
+          in: query
+          type: string
+          example: '{"author": "_id username displayName avatar", "category": "_id name path", "tags": "_id name path" }'
+        - name: select
+          in: query
+          type: string
+          description: "empty or '{attr1} {attr2} ...'"
+      responses:
+        200:
+          description: Article
+          schema: 
+            $ref: '#/definitions/Article'
+        204:
+          description: no matched Article
+        400:
+          description: invalid syntax
+        401:
+          description: signed user only
+        403:
+          description: admin and editor only
+        405:
+          description: missing or invalid required parameters
+    patch:
+      summary: '[admin/self] Update an Article matching the id'
+      tags: [Articles]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Article'
+      responses:
+        200:
+          description: updated Article
+          schema: 
+            $ref: '#/definitions/Article'
+        400:
+          description: invalid syntax
+  /article:
+    get:
+      summary: Input _id or path, Output Article
+      tags: [Articles]
+      parameters:
+        - name: _id
+          in: query
+          type: string
+        - name: path
+          in: query
+          type: string
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/Article'
+        204:
+          description: no matched Article
+        405:
+          description: missing or invalid required query
+  /articles:
+    get:
+      summary: get articles, Input author or tag or category, (optional)limit, sort, skip, count, Output Article[]
+      tags: [Articles]
+      parameters:
+        - name: author
+          in: query
+          type: ObjectId
+        - name: tag
+          in: query
+          type: ObjectId
+        - name: category
+          in: query
+          type: ObjectId
+        - name: limit
+          in: query
+          type: number
+        - name: sort
+          in: query
+          type: number
+        - name: skip
+          in: query
+          type: number
+        - name: count
+          in: query
+          type: number
+      responses:
+        200:
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Article'
+        204:
+          description: no matched Article
+        405:
+          description: missing or invalid required query
+
+## Categories
+  /admin/category:
+    post:
+      summary: "[admin/editor] Create a new category"
+      tags: [Categories]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Category'
+      responses:
+        201:
+          description: new Category
+          schema:
+            $ref: '#/definitions/Category'
+        401:
+          description: Unauthorized
+        405:
+          description: missing or invalid parameters
+    get:
+      summary: '[admin/editor] Return an Category matching the criteria'
+      tags: [Categories]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: criteria
+          in: query
+          type: string
+          required: true
+          value: '{"field":"value"}'
+        - name: select
+          in: query
+          type: string
+          description: "empty or '{attr1} {attr2} ...'"
+      responses:
+        200:
+          description: Category
+          schema: 
+            $ref: '#/definitions/Category'
+        204:
+          description: no matched Category
+        400:
+          description: missing or invalid required parameters
+        401:
+          description: signed user only
+        403:
+          description: admin and editor only
+    delete:
+      summary: '[admin/editor] Delete an Category matching the query (e.g. _id|path|name)'
+      tags: [Categories]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: _id
+          in: query
+          type: string
+        - name: path
+          in: query
+          type: string
+        - name: name
+          in: query
+          type: string
+      responses:
+        204:
+          description: deleted successfully
+        400:
+          description: invalid syntax
+        405:
+          description: invalid query
+
+  /admin/categories:
+    get:
+      summary: '[admin/editor] Return Category[] matching the criteria'
+      tags: [Categories]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+        - name: criteria
+          in: query
+          type: string
+          description: '{"key":"value"}'
+        - name: select
+          in: query
+          type: string
+          description: "empty or '{attr1} {attr2} ...'"
+        - name: limit
+          in: query
+          type: number
+          example: 20
+        - name: skip
+          in: query
+          type: number
+          example: 0
+        - name: sort
+          in: query
+          description: -name
+        - name: count
+          in: query
+          description: if only need to return the count
+      responses:
+        200:
+          description: Category[]
+          schema:
+            $ref: '#/definitions/Category'
+        401:
+          description: Unauthorized        
+    delete:
+      summary: '[admin/editor] Delete categories by ids(body)'
+      tags: [Categories]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: ids
+          in: body
+          required: true
+          type: array
+      responses:
+        204:
+          description: deleted successfully
+        400:
+          description: invalid syntax
+        405:
+          description: 'invalid body: ids'
+
+  /admin/category/{id}:
+    get:
+      summary: '[admin/editor] Return an Category matching the id'
+      tags: [Categories]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: select
+          in: query
+          type: string
+          description: "empty or '{attr1} {attr2} ...'"
+      responses:
+        200:
+          description: Category
+          schema: 
+            $ref: '#/definitions/Category'
+        204:
+          description: no matched Category
+        400:
+          description: invalid syntax
+        401:
+          description: signed user only
+        403:
+          description: admin and editor only
+        405:
+          description: missing or invalid required parameters
+    patch:
+      summary: '[admin/self] Update an Category matching the id'
+      tags: [Categories]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Category'
+      responses:
+        200:
+          description: updated Category
+          schema: 
+            $ref: '#/definitions/Category'
+        400:
+          description: invalid syntax
+  /category:
+    get:
+      summary: Input _id or path, Output Category
+      tags: [Categories]
+      parameters:
+        - name: _id
+          in: query
+          type: string
+        - name: path
+          in: query
+          type: string
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/Category'
+        204:
+          description: no matched Category
+        405:
+          description: missing or invalid required query
+  /categories:
+    get:
+      summary: get categories, Input (optional)limit, sort, skip, count, Output Category
+      tags: [Categories]
+      parameters:
+        - name: limit
+          in: query
+          type: number
+        - name: sort
+          in: query
+          type: number
+        - name: skip
+          in: query
+          type: number
+        - name: count
+          in: query
+          type: number
+      responses:
+        200:
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Category'
+        204:
+          description: no matched Category
+        405:
+          description: missing or invalid required query
+
+## Tags
+  /admin/tag:
+    post:
+      summary: "[admin/editor] Create a new tag"
+      tags: [Tags]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Tag'
+      responses:
+        201:
+          description: new Tag
+          schema:
+            $ref: '#/definitions/Tag'
+        401:
+          description: Unauthorized
+        405:
+          description: missing or invalid parameters
+    get:
+      summary: '[admin/editor] Return an Tag matching the criteria'
+      tags: [Tags]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: criteria
+          in: query
+          type: string
+          required: true
+          value: '{"field":"value"}'
+        - name: select
+          in: query
+          type: string
+          description: "empty or '{attr1} {attr2} ...'"
+      responses:
+        200:
+          description: Tag
+          schema: 
+            $ref: '#/definitions/Tag'
+        204:
+          description: no matched Tag
+        400:
+          description: missing or invalid required parameters
+        401:
+          description: signed user only
+        403:
+          description: admin and editor only
+    delete:
+      summary: '[admin/editor] Delete an Tag matching the query'
+      tags: [Tags]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: _id
+          in: query
+          type: string
+        - name: path
+          in: query
+          type: string
+        - name: name
+          in: query
+          type: string
+      responses:
+        204:
+          description: deleted successfully
+        400:
+          description: invalid syntax
+        405:
+          description: invalid query
+  /admin/tags:
+    get:
+      summary: '[admin/editor] Return Tag[] matching the criteria'
+      tags: [Tags]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+        - name: criteria
+          in: query
+          type: string
+          description: '{"key":"value"}'
+        - name: select
+          in: query
+          type: string
+          description: "empty or '{attr1} {attr2} ...'"
+        - name: limit
+          in: query
+          type: number
+          example: 20
+        - name: skip
+          in: query
+          type: number
+          example: 0
+        - name: sort
+          in: query
+          description: -name
+        - name: count
+          in: query
+          description: if only need to return the count
+      responses:
+        200:
+          description: Tag[]
+          schema:
+            $ref: '#/definitions/Tag'
+        401:
+          description: Unauthorized        
+    delete:
+      summary: '[admin/editor] Delete tags by ids(body)'
+      tags: [Tags]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: ids
+          in: body
+          required: true
+          type: array
+      responses:
+        204:
+          description: deleted successfully
+        400:
+          description: invalid syntax
+        405:
+          description: 'invalid body: ids'
+
+  /admin/tag/{id}:
+    get:
+      summary: '[admin/editor] Return an Tag matching the id'
+      tags: [Tags]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: select
+          in: query
+          type: string
+          description: "empty or '{attr1} {attr2} ...'"
+      responses:
+        200:
+          description: Tag
+          schema: 
+            $ref: '#/definitions/Tag'
+        204:
+          description: no matched Tag
+        400:
+          description: invalid syntax
+        401:
+          description: signed user only
+        403:
+          description: admin and editor only
+        405:
+          description: missing or invalid required parameters
+    patch:
+      summary: '[admin/self] Update an Tag matching the id'
+      tags: [Tags]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Tag'
+      responses:
+        200:
+          description: updated Tag
+          schema: 
+            $ref: '#/definitions/Tag'
+        400:
+          description: invalid syntax
+  /tag:
+    get:
+      summary: Input _id or path, Output Tag
+      tags: [Tags]
+      parameters:
+        - name: _id
+          in: query
+          type: string
+        - name: path
+          in: query
+          type: string
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/Tag'
+        204:
+          description: no matched Tag
+        405:
+          description: missing or invalid required query
+  /tags:
+    get:
+      summary: get tags, Input (optional)limit, sort, skip, count, Output Tag
+      tags: [Tags]
+      parameters:
+        - name: limit
+          in: query
+          type: number
+        - name: sort
+          in: query
+          type: number
+        - name: skip
+          in: query
+          type: number
+        - name: count
+          in: query
+          type: number
+      responses:
+        200:
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tag'
+        204:
+          description: no matched Tag
+        405:
+          description: missing or invalid required query
+
+
+# Definitions
+definitions:
+  Login:
+    type: object
+    required: [username, password]
+    properties:
+      username:
+        type: string
+        example: admin
+      password:
+        type: string
+        example: admin
+  Logged:
+    type: object
+    description: return by Auth /login or /verify
+    properties:
+      token:
+        type: string
+        description: generated jsonwebtoken
+      _id:
+        type: string
+        format: objectId
+      username:
+        type: string
+      role:
+        type: string
+  
+  User:
+    type: object
+    required: [username, email]
+    properties:
+      username:
+        type: string
+        example: editor
+      displayName:
+        type: string
+        example: editor Display-Name
+      email:
+        type: string
+        example: editor@arknodejs.com
+      avatar:
+        type: string
+        example: https://avatars.githubusercontent.com/u/3350260?v=3
+      role:
+        type: string
+        description: 'default: editor'
+      bio:
+        type: string
+        example: a good hacker
+  Article:
+    type: object
+    required: [_id, title, path, author, category, content]
+    properties:
+      title:
+        type: string
+        example: a new article title
+      path:
+        type: string
+        example: a-new-article-title
+      author:
+        type: string
+        format: objectId
+      thumbnail:
+        type: string
+        example: https://avatars.githubusercontent.com/u/3350260?v=3
+      content:
+        type: string
+        description: markdown format
+      summary:
+        type: string
+        description: some part of content, default is empty string
+        example: ''
+      category:
+        type: string
+        description: '_id or category:{ _id, path, name }'
+      tags:
+        type: array
+        description: '[_id] or [tag:{ _id, path, name }]'
+        example: '[]'
+      allowComment:
+        type: boolean
+        description: whether allow visitor to comment on discuz / facebook
+        example: true
+  Category:
+    type: object
+    required: [name, path]
+    properties:
+      name:
+        type: string
+        example: swagger yaml
+      path:
+        type: string
+        example: swagger-yaml      
+  Tag:
+    type: object
+    required: [name, path]
+    properties:
+      name:
+        type: string
+        example: swagger yaml
+      path:
+        type: string
+        example: swagger-yaml
+  _base:
+    description: Shared by all database schemas
+    type: object
+    properties:
+      _id:
+        type: string
+        format: objectId
+        description: Auto-generated by mongodb 24 digit
+      createAt:
+        type: date
+        example: 2017-09-09T19:13:52.832Z
+      updateAt:
+        type: data
+        example: 2017-09-09T19:13:52.832Z
+      hidden: 
+        type: boolean
+        example: false

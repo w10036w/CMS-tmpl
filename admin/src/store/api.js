@@ -1,0 +1,32 @@
+import io from 'axios'
+import config from '../../config'
+
+// notice: if [GET], the body is { params } (if any)
+function send ({ method='get', path, body, params }) {
+  const uri = config.apiHost + path
+  if (params && !body) body = { params }
+  return io[method](uri, body)
+    .then(d => d)
+    .catch(e => {
+      let msg
+      if (e.response) msg = e.response.message
+      else if (e.request) msg = e.request.message
+      else msg = e.message
+      console.error(`[API ${method.toUpperCase()}] ${msg}`)
+      return msg
+    })
+}
+
+export default {
+  appHost: config.appHost,
+  addAuth (token) {
+    io.interceptors.request.use(config => {
+      config.headers['authorization'] = token
+      return config
+    }, (error) => Promise.reject(error))
+  },
+  get: (path, params) => send({ path, params }),
+  post: (path, body) => send({ path, body, method: 'post' }),
+  patch: (path, body) => send({ path, body, method: 'patch'}),
+  del: (path, body) => send({ path, body, method: 'delete'}),
+}

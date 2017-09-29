@@ -1,0 +1,31 @@
+.opblock-body {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  padding-bottom: 100px;
+}
+.opblock-description-wrapper {
+  width: 100%;
+}
+.opblock-section, .responses-wrapper {
+  width: 50%;
+}
+.execute-wrapper, .btn-group {
+  position: absolute;
+  left: 200px;
+  width: 20%;
+  height: 50px;
+}
+.swagger-ui .execute-wrapper{
+  padding: 8px 20px;
+}
+.swagger-ui .btn-group {
+  padding: 7px 20px;
+}
+.swagger-ui .execute-wrapper .btn {
+  padding: 5px 35px;
+}
+.swagger-ui .responses-table tbody .response-col_status {
+  padding-top: 28px
+}

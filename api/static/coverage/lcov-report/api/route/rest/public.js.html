@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for api/route/rest/public.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">api/route/rest</a> public.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">17.36% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>21/121</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">8.93% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>5/56</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">11.11% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">21.51% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>20/93</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// public access api
+//const ObjectId = require('mongoose').Types.ObjectId
+const { json } = resolve('util/http')
+const { models, io } = resolve('mongo')
+const io_user = io(models.user)
+const io_article = io(models.article)
+const io_tag = io(models.tag)
+const io_category = io(models.category)
+&nbsp;
+const act_article = resolve('mongo/action/article')
+const act_user = resolve('mongo/action/user')
+&nbsp;
+module.exports = {
+  user: {
+    findOne: async ctx =&gt; {
+      const { _id, username, email } = ctx.query
+      const cond = {}
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (_id) <span class="cstat-no" title="statement not covered" >cond._id = _id</span>
+      else if (username) cond.username = username
+      else <span class="missing-if-branch" title="if path not taken" >I</span>if (email) <span class="cstat-no" title="statement not covered" >cond.email = email</span>
+      else return ctx.throw(405, 'missing query: _id / username / email')
+      cond.hidden = false
+      cond.role = { $not: /^admin$/ } // has to be RegEx
+      const { data, error } = await act_user.findOne(cond)
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (error) <span class="cstat-no" title="statement not covered" >ctx.throw(500, error)</span>
+      else ctx.body = data
+    },
+  },
+  article: {
+    findOne: <span class="fstat-no" title="function not covered" >as</span>ync ctx =&gt; {
+      const { _id, path, author } = <span class="cstat-no" title="statement not covered" >ctx.query</span>
+      let cond = <span class="cstat-no" title="statement not covered" >{}</span>
+<span class="cstat-no" title="statement not covered" >      if (_id) <span class="cstat-no" title="statement not covered" >cond._id = _id</span></span>
+      else <span class="cstat-no" title="statement not covered" >if (path) <span class="cstat-no" title="statement not covered" >cond.path = path</span></span>
+      else <span class="cstat-no" title="statement not covered" >if (author) <span class="cstat-no" title="statement not covered" >cond.author = author</span></span>
+      else <span class="cstat-no" title="statement not covered" >return ctx.throw(405, 'missing query: _id / path / author')</span>
+<span class="cstat-no" title="statement not covered" >      cond.hidden = false</span>
+      const { data, error } = <span class="cstat-no" title="statement not covered" >await act_article.findOne(cond)</span>
+<span class="cstat-no" title="statement not covered" >      if (error) <span class="cstat-no" title="statement not covered" >ctx.throw(500, error)</span></span>
+      else <span class="cstat-no" title="statement not covered" >ctx.body = data</span>
+    },
+    find: <span class="fstat-no" title="function not covered" >as</span>ync ctx =&gt; {
+      const { author, category, tag, limit, skip, sort, count } = <span class="cstat-no" title="statement not covered" >ctx.query</span>
+      let cond = <span class="cstat-no" title="statement not covered" >{}</span>
+      // findAll if no author | category | tag
+<span class="cstat-no" title="statement not covered" >      if (author) <span class="cstat-no" title="statement not covered" >cond.author = author</span></span>
+<span class="cstat-no" title="statement not covered" >      if (category) <span class="cstat-no" title="statement not covered" >cond.category = category</span></span>
+<span class="cstat-no" title="statement not covered" >      if (tag) <span class="cstat-no" title="statement not covered" >cond.tags = tag</span></span>
+<span class="cstat-no" title="statement not covered" >      cond.hidden = false</span>
+      // https://stackoverflow.com/questions/18148166/find-document-with-array-that-contains-a-specific-value
+      const { data, error } = <span class="cstat-no" title="statement not covered" >await act_article.find({ cond, limit, skip, sort, count })</span>
+<span class="cstat-no" title="statement not covered" >      if (error) <span class="cstat-no" title="statement not covered" >ctx.throw(500, error)</span></span>
+      else <span class="cstat-no" title="statement not covered" >ctx.body = data</span>
+    },
+  },
+  tag: {
+    // actually findAll not hidden
+    find: <span class="fstat-no" title="function not covered" >as</span>ync ctx =&gt; {
+      let { limit, skip, sort, count } = <span class="cstat-no" title="statement not covered" >ctx.query</span>
+      const select = <span class="cstat-no" title="statement not covered" >'_id name path'</span>
+      const cond = <span class="cstat-no" title="statement not covered" >{ hidden: false }</span>
+      let j = <span class="cstat-no" title="statement not covered" >await io_tag.find(cond, select, { limit, skip, sort, count })</span>
+<span class="cstat-no" title="statement not covered" >      if (j.code!==200) <span class="cstat-no" title="statement not covered" >return ctx.throw(j.code, j.note)</span></span>
+<span class="cstat-no" title="statement not covered" >      return ctx.body = j.data</span>
+    },
+    findOne: <span class="fstat-no" title="function not covered" >as</span>ync ctx =&gt; {
+      let { _id, path } = <span class="cstat-no" title="statement not covered" >ctx.query</span>
+      const select = <span class="cstat-no" title="statement not covered" >'_id name path'</span>
+      let cond = <span class="cstat-no" title="statement not covered" >{}</span>
+<span class="cstat-no" title="statement not covered" >      if (_id) <span class="cstat-no" title="statement not covered" >cond._id = _id</span></span>
+      else <span class="cstat-no" title="statement not covered" >if (path) <span class="cstat-no" title="statement not covered" >cond.path = path</span></span>
+      else <span class="cstat-no" title="statement not covered" >return ctx.throw(405, 'missing query: _id / path')</span>
+<span class="cstat-no" title="statement not covered" >      cond.hidden = false</span>
+      const { data, error } = <span class="cstat-no" title="statement not covered" >await io_tag.findOne(cond, select)</span>
+<span class="cstat-no" title="statement not covered" >      if (error) <span class="cstat-no" title="statement not covered" >ctx.throw(500)</span></span>
+<span class="cstat-no" title="statement not covered" >      ctx.body = data</span>
+    },
+    findArticles: <span class="fstat-no" title="function not covered" >as</span>ync ctx =&gt; {
+      const { path } = <span class="cstat-no" title="statement not covered" >ctx.params</span>
+      const { limit, skip, sort, count } = <span class="cstat-no" title="statement not covered" >ctx.query</span>
+<span class="cstat-no" title="statement not covered" >      if (!path) <span class="cstat-no" title="statement not covered" >ctx.throw(405, 'missing params: path')</span></span>
+      let select = <span class="cstat-no" title="statement not covered" >'_id name'</span>
+      const tag = <span class="cstat-no" title="statement not covered" >await io_tag.findOne({ path, hidden: false }, select)</span>
+<span class="cstat-no" title="statement not covered" >      if (tag.error) <span class="cstat-no" title="statement not covered" >ctx.throw(500)</span></span>
+<span class="cstat-no" title="statement not covered" >      if (!tag.data) <span class="cstat-no" title="statement not covered" >ctx.throw(204) </span></span>// tag not exist
+      const cond = <span class="cstat-no" title="statement not covered" >{ tags: tag.data._id, hidden: false }</span>
+      const { data, error } = <span class="cstat-no" title="statement not covered" >await act_article.find({ cond, limit, skip, sort, count })</span>
+<span class="cstat-no" title="statement not covered" >      if (error) <span class="cstat-no" title="statement not covered" >ctx.throw(500)</span></span>
+<span class="cstat-no" title="statement not covered" >      ctx.body = data</span>
+    },
+  },
+  category: {
+    // actually findAll not hidden
+    find: <span class="fstat-no" title="function not covered" >as</span>ync ctx =&gt; {
+      let { limit, skip, sort, count } = <span class="cstat-no" title="statement not covered" >ctx.query</span>
+      const select = <span class="cstat-no" title="statement not covered" >'_id name path'</span>
+      const cond = <span class="cstat-no" title="statement not covered" >{ hidden: false }</span>
+      let j = <span class="cstat-no" title="statement not covered" >await io_category.find(cond, select, { limit, skip, sort, count })</span>
+<span class="cstat-no" title="statement not covered" >      if (j.code!==200) <span class="cstat-no" title="statement not covered" >return ctx.throw(j.code, j.note)</span></span>
+<span class="cstat-no" title="statement not covered" >      return ctx.body = j.data</span>
+    },
+    findOne: <span class="fstat-no" title="function not covered" >as</span>ync ctx =&gt; {
+      let { _id, path } = <span class="cstat-no" title="statement not covered" >ctx.query</span>
+      const select = <span class="cstat-no" title="statement not covered" >'_id name path'</span>
+      let cond = <span class="cstat-no" title="statement not covered" >{}</span>
+<span class="cstat-no" title="statement not covered" >      if (_id) <span class="cstat-no" title="statement not covered" >cond._id = _id</span></span>
+      else <span class="cstat-no" title="statement not covered" >if (path) <span class="cstat-no" title="statement not covered" >cond.path = path</span></span>
+      else <span class="cstat-no" title="statement not covered" >return ctx.throw(405, 'missing query: _id / path')</span>
+<span class="cstat-no" title="statement not covered" >      cond.hidden = false</span>
+      const { data, error } = <span class="cstat-no" title="statement not covered" >await io_category.findOne(cond, select)</span>
+<span class="cstat-no" title="statement not covered" >      if (error) <span class="cstat-no" title="statement not covered" >ctx.throw(500)</span></span>
+<span class="cstat-no" title="statement not covered" >      ctx.body = data</span>
+    },
+    findArticles: <span class="fstat-no" title="function not covered" >as</span>ync ctx =&gt; {
+      const { path } = <span class="cstat-no" title="statement not covered" >ctx.params</span>
+      const { limit, skip, sort, count } = <span class="cstat-no" title="statement not covered" >ctx.query</span>
+<span class="cstat-no" title="statement not covered" >      if (!path) <span class="cstat-no" title="statement not covered" >ctx.throw(405, 'missing params: path')</span></span>
+      let select = <span class="cstat-no" title="statement not covered" >'_id name'</span>
+      const category = <span class="cstat-no" title="statement not covered" >await io_category.findOne({ path, hidden: false }, select)</span>
+<span class="cstat-no" title="statement not covered" >      if (category.error) <span class="cstat-no" title="statement not covered" >ctx.throw(500)</span></span>
+<span class="cstat-no" title="statement not covered" >      if (!category.data) <span class="cstat-no" title="statement not covered" >ctx.throw(204) </span></span>// tag not exist
+      const cond = <span class="cstat-no" title="statement not covered" >{ category: category.data._id, hidden: false }</span>
+      const { data, error } = <span class="cstat-no" title="statement not covered" >await act_article.find({ cond, limit, skip, sort, count })</span>
+<span class="cstat-no" title="statement not covered" >      if (error) <span class="cstat-no" title="statement not covered" >ctx.throw(500)</span></span>
+<span class="cstat-no" title="statement not covered" >      ctx.body = data</span>
+    },
+  }
+&nbsp;
+&nbsp;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Sep 24 2017 17:37:16 GMT+0800 (+08)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

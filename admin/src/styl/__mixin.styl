@@ -1,0 +1,7 @@
+mxBorder(p='', v=1, c=rgba(black,.2), s=solid)
+  pos = ''
+  pos = '-bottom' if p=='b' 
+  pos = '-top' if p=='t' 
+  pos = '-right' if p=='r' 
+  pos = '-left' if p=='l'
+  border{pos} unit(v, px) s c 
