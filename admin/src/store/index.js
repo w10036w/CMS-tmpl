@@ -69,7 +69,23 @@ export default new Vuex.Store({
         if (r.status && r.status === 204) return null
         return null
       }).catch(error => ({ error }) )
-    }
+    },
+    change_pass ({ commit }, opts) {
+      return api.patch(`/admin/password/${opts.id}`, { password: opts.password })
+        .then(r => {
+          let j = null
+          if (r.status && r.status === 200) j = r.data
+          return j
+        })
+    },
+    qiniu_token ({ commit }, name) {
+      return api.post(`/qiniu/token?name=${name}`)
+        .then(r => {
+          let j = null
+          if (r.status && r.status === 200) j = r.data
+          return j
+        })
+    },
   },
   // uppercase_x
   mutations: {

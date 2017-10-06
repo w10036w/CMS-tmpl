@@ -1,12 +1,16 @@
 <template lang="slm">
-.view.view-user
+.view
+  //Comp
 </template>
 <script>
 import { mapGetters } from 'vuex'
+//import Comp from '@c/Comp'
 
 export default {
-  name: 'hello',
-  components: {  },
+  name: '',
+  //components: {  },
+  props: [],
+  mixin: [],
   data: () => ({
     
   }),
@@ -15,7 +19,6 @@ export default {
       
     })
   },
-  props: [],
   watch: {},
   beforeMount () {},
   mounted () {},

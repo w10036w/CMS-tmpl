@@ -1,0 +1,84 @@
+body
+  font-family 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+  -webkit-tap-highlight-color transparent
+  -webkit-text-size-adjust: none;
+  outline none
+  -webkit-appearance none
+
+a
+  color cIblue
+  text-decoration none
+  &:hover
+    text-decoration underline
+
+.view
+.page
+  margin-left 300px
+  padding-left 20px
+  padding-right 20px
+  main
+    padding-top .1px
+
+.page main
+.pre-pager
+  padding-bottom 12px
+  margin-bottom -60px
+  min-height 100vh
+  &::after 
+    content: ''
+    display block
+    height hPager
+@media (max-width:768px)
+  .view
+  .page
+    margin-left 0
+    padding-top hNav
+/**
+ * Visibility 
+ */
+.hide
+  display none!important
+.show
+  display block!important
+.category
+  display inline-block
+  font-weight bold
+  color cSuccess
+  padding 2px 8px
+  margin-right 10px
+  border 1px solid cSuccess
+  transition all .15s ease-in-out
+.tag
+  display inline-block
+  position relative
+  padding 2px 8px
+  margin-right 5px
+  color cPrimary
+  border 1px solid cPrimary
+  font-size .85em
+  overflow hidden
+  transition color .15s ease-in-out
+  &::before, &::after
+    position absolute
+    display block
+    z-index -1
+    content ''
+    top 0
+    width 0
+    height 100%
+    background-color cPrimary
+    transition width .15s ease-in-out
+  &::before
+    right 50%
+  &::after
+    left 50%
+  &:hover
+    text-decoration none
+    color white
+    &::before, &::after
+      width 50%
+
+.img-stroke
+  border 2px solid white

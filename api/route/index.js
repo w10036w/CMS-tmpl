@@ -5,7 +5,8 @@ const suff = bProd ? 'com':'dev'
 // whitelist
 const wl = [
   `https://api.arknodejs.${suff}`,
-  `https://blog.arknodejs.${suff}`,
+  `https://arknodejs.${suff}`,
+  `https://www.arknodejs.${suff}`,
   `https://admin.arknodejs.${suff}`,
 ]
 // whitelist filter

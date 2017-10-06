@@ -15,6 +15,7 @@ const schema = new Schema(Object.assign({
   summary: { type: String, default: '' },
   // format is always md
   content: { type: String, required: true },
+  html: { type: String, required: true },
   tags: [{ type: ObjectId, ref: 'tag' }],
   category: { type: ObjectId, required: true, ref: 'category' },
   allowComment: { type: Boolean, default: true },

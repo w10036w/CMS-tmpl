@@ -37,11 +37,12 @@
     el-table-column label="Operation" :context="_self" width="190" inline-template=""
       span
         el-button @click="editItem(row, $index)" type="info" :plain="true" size="small" EDIT
-        el-button @click="removeItem(row, $index)" type="danger" size="small" REMOVE
+        el-button @click="removeItem(row, $index)" type="danger" v-if="authed._id!==row._id" size="small" REMOVE
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import { capitalize, fmtDateyymdhms } from '~u/filters'
+import bar from '~u/bar'
 
 export default {
   props: ['opts'],
@@ -49,7 +50,11 @@ export default {
     selection: [],
   }),
   computed: {
-    ...mapGetters([ 'loading', 'list' ]),
+    ...mapGetters({
+      loading: 'loading',
+      list: 'list',
+      authed: 'auth/authed'
+    }),
     fmtedList () {
       const filters = this.opts.columns
       return this.list.map(e => {
@@ -67,8 +72,8 @@ export default {
     },
     appHost () { return this.$store.state.appHost } 
   },
-  watch: {},
   created () {
+    bar.start()
     return this._fetch()
   },
   mounted () {},
@@ -85,6 +90,7 @@ export default {
         opts = Object.assign({ params: { populate } }, this.opts)
       }
       return this.$store.dispatch('fetch_list', opts)
+        .then(() => bar.finish())
     },
     gWidth (e) {
       if (/title|email|username/i.test(e)) return 280

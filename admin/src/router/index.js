@@ -4,6 +4,7 @@ import Router from 'vue-router'
 const ViewHome = () => import('~v/ViewHome')
 const ViewStats = () => import('~v/ViewStats') // Google Analytics, Discuz
 const ViewLogin = () => import('~v/ViewLogin')
+const ViewSettings = () => import('~v/ViewSettings')
 
 const PageError = () => import('~p/PageError')
 
@@ -33,6 +34,7 @@ export default new Router({
     { path: '/', name: 'ViewHome', component: ViewHome },
     { path: '/stats', name: 'ViewStats', component: ViewStats },
     { path: '/login', name: 'ViewLogin', component: ViewLogin },
+    { path: '/settings', name: 'ViewSettings', component: ViewSettings },
     { path: '/users', name: 'ViewUsers', component: listView({
       name: 'users', model: 'user', columns: [ 'avatar', 'username', 'displayName', 'role', 'email', 'createAt' ]
     }) },
@@ -58,6 +60,6 @@ export default new Router({
     { path: '/error', name: 'PageError', component: PageError },
 
     //{ path: '/manage/:list', component: listView() },
-    { path: '*', redirect: '/' },
+    { path: '*', redirect: '/error' },
   ]
 })

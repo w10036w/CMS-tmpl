@@ -11,17 +11,22 @@ function app_api (r) {
 
   // article
   r.get('/articles', api.article.find) // all or by author(_id), tag(_id), category(_id)
+  r.get('/articles/category/:path', api.article.findByCategory) // by path
+  r.get('/articles/tag/:path', api.article.findByTag) // by path
   r.get('/article', api.article.findOne) // by _id or path
+  r.get('/article/context', api.article.findContext) // by id
 
   // tag
+  r.get('/tagcloud', api.tag.findSortedTagsArticles) // all or by limit/sort/skip/count
   r.get('/tags', api.tag.find) // all or by limit/sort/skip/count
   r.get('/tag', api.tag.findOne) // _id or path
-  r.get('/tag/:path/articles', api.tag.findArticles) // all or by given ids
 
   // category
   r.get('/categories', api.category.find) // same with tag
+  r.get('/categorycloud', api.category.findSortedCategoriesArticles) // same with tag
   r.get('/category', api.category.findOne)
-  r.get('/category/:path/articles', api.category.findArticles)
+
+  r.get('/sitemap', api.article.sitemap)
 }
 
 // admin controls all mutations
@@ -58,7 +63,9 @@ function admin_api (r) {
     }
   }
   // password only
-  r.patch('/password/:id', bSigned, bAdminOrSelf, action.updateVirtual)
+  r.patch('/admin/password/:id', bSigned, bAdminOrSelf, action.updateVirtual)
+  // change options, current only themes
+  //r.path('/admin/theme')
 }
 
 module.exports = r => {

@@ -2,8 +2,8 @@
 #app
   NavMenu v-if="authed"
   AsideMenu v-if="authed"
-  transition name="slideRight" mode="out-in"
-    router-view.trans-5
+  transition name="fade" mode="out-in"
+    router-view.trans-3
 </template>
 <script>
 import { mapGetters } from 'vuex'

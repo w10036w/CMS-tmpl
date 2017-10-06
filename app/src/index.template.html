@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{ meta.title }}</title>
+  <meta charset="utf-8">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+  <meta property="og:site_name" content="Arknodejs">
+  <meta property="og:title" content="{{ meta['og:title'] }}">
+  <meta property="og:type" content="{{ meta['og:type'] }}">
+  <meta property="og:url" content="{{ meta['og:url'] }}">
+  <meta property="og:description" content="{{ meta['og:description'] }}">
+  <meta property="og:image" content="{{ meta['og:image'] }}">
+  <meta name="description" content="{{ meta.description }}">
+  <meta name="twitter:description" content="{{ meta['twitter:description'] }}">
+  <link rel="apple-touch-icon" sizes="57x57" href="/public/ico/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/public/ico/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/public/ico/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/public/ico/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/public/ico/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/public/ico/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/public/ico/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/public/ico/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/ico/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/public/ico/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/ico/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/public/ico/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/ico/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="manifest" href="/manifest.json">
+  <!-- APP special -->
+  <meta name="apple-touch-fullscreen" content="no">
+  <meta name="robots" content="index">
+  <!-- APP FONTS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono|Source+Sans+Pro:300,400,600|Dosis:500">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="trans-3">
+  <div id="skip"><a href="#app">skip to content</a></div>
+  <!--vue-ssr-outlet-->
+  <!-- Global Site Tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107326123-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments) };
+    gtag('js', new Date());
+    gtag('config', 'UA-107326123-1');
+  </script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+/api/static/*.* linguist-language=JavaScript
+/conf/*.* linguist-language=Shell

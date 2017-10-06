@@ -1,6 +1,6 @@
 server {
   listen         80;
-  server_name    arknodejs.dev;
+  server_name    arknodejs.dev www.arknodejs.dev;
   return         301 https://$server_name$request_uri;
 }
 
@@ -8,7 +8,7 @@ proxy_cache_path /etc/nginx/tmp levels=1:2 keys_zone=arknodejs.dev:10m inactive=
 proxy_cache_key "$scheme$request_method$host$request_uri";
 
 server {
-  server_name  arknodejs.com;
+  server_name  arknodejs.dev www.arknodejs.dev;
   charset utf-8;
   listen       443 ssl http2 fastopen=3 reuseport;
   ssl                   on;
@@ -61,9 +61,9 @@ server {
   }
 
   # CSS and Javascript
-  location ~* \.(jpg|jpeg|gif|css|png|js|ico)$ {
-    expires 7d;
-    access_log off;
-    add_header Cache-Control "public";
-  }
+  #location ~* \.(jpg|jpeg|gif|css|png|js|ico)$ {
+  #  expires 7d;
+  #  access_log off;
+  #  add_header Cache-Control "public";
+  #}
 }

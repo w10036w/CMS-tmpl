@@ -42,7 +42,7 @@ module.exports = model => ({
     }
     return await mongoTry(task)
   },
-  find: async (criteria, select, { limit, skip=0, sort=null, count=false, populate }) => {
+  find: async (criteria, select, { limit, skip, sort, count, populate }) => {
     const task = model.find(criteria, select)
     if (populate) {
       for (k in populate) {
@@ -53,7 +53,6 @@ module.exports = model => ({
     if (skip) task.skip(parseInt(skip))
     if (sort) task.sort(sort)
     if (count) task.count()
-    
     let { data, error } = await mongoTry(task)
     return userFieldsFilter(model, data, error)
   },

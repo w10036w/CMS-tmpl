@@ -73,23 +73,28 @@
         el-form-item label="Updated" v-if="id"
           .date.t-center {{ current.updateAt | fmtDateyymdhms }}
         el-form-item label="Hidden"
-          el-switch v-model="current.hidden"
+          el-switch v-model="current.hidden" 
         el-form-item label="Comment" v-if="opts.name==='article'"
-          el-switch v-model="current.allowComment"
+          el-switch v-model="current.allowComment" 
+        el-form-item label-width="20px" v-if="opts.name==='article'||opts.name==='user'"
+          ImgUpload :model="opts.name"
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import ImgUpload from '~c/ImgUpload'
 import { marked } from '~u/marked'
 import { urlize } from '~u/filters'
+import bar from '~u/bar'
 
 export default {
   props: ['opts'],
+  components: { ImgUpload },
   data: () => ({
     current: null,
     categoryList: [],
     tagList: [],
     customizePath: false,
-    mode: 'edit'
+    mode: 'edit',
   }),
   computed: {
     id () { return this.$route.params.id },
@@ -123,26 +128,25 @@ export default {
     'current.name' () {
       this.current.path = urlize(this.current.name)
     },
-    'current.content' () {
-      this.current.summary = this.current.content.length > 100 ? 
-        (this.current.content.substr(100) + '...') : this.current.content
-    }
   },
   created () {
     if (this.opts.type === 'create') this._initCurrent()
-    else this._fetch()
+    else {
+      this._fetch()
+      bar.start()
+    }
   },
   methods: {
     _initCurrent () {
       if (this.opts.name === 'user') {
         this.current = { 
           username: '', displayName: '', password: '', email: '', avatar: '', 
-          role: 'editor', bio: '', hidden: false, allowComment: true }
+          role: 'editor', bio: '', hidden: false }
       } else if (this.opts.name === 'article') {
         this.current = {
-          title: '', path: '',
-          author: '', category: '', tags: [],
-          summary: '', content: '', hidden: false
+          title: '', path: '', author: '',
+          author: '', category: '', tags: [], html: '',
+          summary: '', content: '<pbr>', hidden: false, allowComment: true
         }
         this._fetchCateTags()
       } else {
@@ -166,9 +170,16 @@ export default {
       if (opts.name === 'article') this._fetchCateTags()
       this.$store.dispatch('fetch_item', opts).then(item => {
         this.current = Object.assign({}, item)
+        bar.finish()
       })
     },
+    _articleSpec () {
+      this.current.author = this.authed._id
+      this.current.summary = marked(this.current.content.split('<pbr>')[0])
+      this.current.html = marked(this.current.content.replace(/<pbr>/g, ''))
+    },
     create () {
+      this.opts.name === 'article' && this._articleSpec()
       this.$store.dispatch('create_item', { name: this.opts.name, body: this.current })
         .then(d => {
           if (d) {
@@ -180,6 +191,8 @@ export default {
         })
     },
     update () {
+      this.opts.name === 'article' && this._articleSpec()
+      this.current.hidden = this.hidden
       this.$store.dispatch('update_item', { id: this.id, name: this.opts.name, body: this.current })
         .then(d => {
           if (d) {

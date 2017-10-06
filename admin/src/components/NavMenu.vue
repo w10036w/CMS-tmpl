@@ -10,14 +10,11 @@ nav.nav-bar
       el-menu-item index="/create/category" Category 
       el-menu-item index="/create/tag" Tag 
     template v-if="authed"
-      el-submenu.right index="9" 
+      el-submenu.right index="9"
         template slot="title" {{ authed.username }} 
-        el-menu-item index="9-1" 
-          router-link :to="'/user/'+authed.username" Profile
-        el-menu-item index="9-1" v-if="bAdmin"
-          router-link :to="'/user/'+authed.username+'/settings'" Settings
-        el-menu-item index="9-3" 
-          span @click="logout" Logout
+        el-menu-item :index="'/user/'+authed._id" Profile
+        el-menu-item index="/settings" v-if="bAdmin" Settings
+        el-menu-item index="9-3" @click="logout" Logout
       //el-submenu index="10" {{ authed.username }} 
     template v-else=""
       el-menu-item.right index="/login" Login

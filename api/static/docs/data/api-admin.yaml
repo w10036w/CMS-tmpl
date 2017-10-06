@@ -524,6 +524,22 @@ paths:
           description: no matched Article
         405:
           description: missing or invalid required query
+  /article/context:
+    get:
+      summary: Input id, Output 2 nearby Articles, null if no match (partial - _id, path, title)
+      tags: [Articles]
+      parameters:
+        - name: id
+          in: query
+          type: string
+      responses:
+        200:
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Article'
+        405:
+          description: missing or invalid required query
   /articles:
     get:
       summary: get articles, Input author or tag or category, (optional)limit, sort, skip, count, Output Article[]
@@ -560,7 +576,66 @@ paths:
           description: no matched Article
         405:
           description: missing or invalid required query
-
+  /articles/category/{path}:
+    get:
+      summary: get articles, Input category path, (optional)limit, sort, skip, count, Output Article[]
+      tags: [Articles]
+      parameters:
+        - name: path
+          in: path
+          type: string
+        - name: limit
+          in: query
+          type: number
+        - name: sort
+          in: query
+          type: number
+        - name: skip
+          in: query
+          type: number
+        - name: count
+          in: query
+          type: number
+      responses:
+        200:
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Article'
+        204:
+          description: no matched Article
+        405:
+          description: missing or invalid required query
+  /articles/tag/{path}:
+    get:
+      summary: get articles, Input tag path, (optional)limit, sort, skip, count, Output Article[]
+      tags: [Articles]
+      parameters:
+        - name: path
+          in: path
+          type: string
+        - name: limit
+          in: query
+          type: number
+        - name: sort
+          in: query
+          type: number
+        - name: skip
+          in: query
+          type: number
+        - name: count
+          in: query
+          type: number
+      responses:
+        200:
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Article'
+        204:
+          description: no matched Article
+        405:
+          description: missing or invalid required query
 ## Categories
   /admin/category:
     post:
@@ -1052,7 +1127,39 @@ paths:
         405:
           description: missing or invalid required query
 
-
+  /qiniu/token:
+    post:
+      summary: '[admin/editor]get qiniu token before upload an image'
+      tags: [Others]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: admin/editor
+        - name: name
+          in: query
+          type: string
+          required: true
+          example: 'mini-rose-ts.png'
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/QiniuToken'
+        500:
+          description: token not returned
+  /sitemap:
+    get:
+      summary: 'get all articles path and update time for sitemap'
+      tags: [Others]
+      responses:
+        200:
+          schema:
+            type: array
+            items: 
+              $ref: '#/definitions/Sitemap'
+        500:
+          description: api unavailable
 # Definitions
 definitions:
   Login:
@@ -1173,3 +1280,23 @@ definitions:
       hidden: 
         type: boolean
         example: false
+  QiniuToken:
+    type: object
+    required: [token, key, host]
+    properties:
+      token:
+        type: string
+      key:
+        type: string
+      host:
+        type: string
+  Sitemap:
+    type: object
+    required: [_id, path, updateAt]
+    properties:
+      _id:
+        type: string
+      path:
+        type: string
+      updateAt:
+        type: string

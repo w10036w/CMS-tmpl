@@ -76,7 +76,7 @@ export function smoothScroll(x, y, dom=window) {
 }
 
 // https://stackoverflow.com/questions/487073/check-if-element-is-visible-after-scrolling
-export function nScrolledIntoView(el) {
+export function nScrolledIntoView (el) {
   var elemTop = el.getBoundingClientRect().top;
   var elemBottom = el.getBoundingClientRect().bottom;
   // if (elemTop >= window.innerHeight) return 0 // underneath
@@ -86,10 +86,31 @@ export function nScrolledIntoView(el) {
   return isVisible;
 }
 
-export function mouseMove (func, threshold=25) {
-  evListen('mousemove', function (ev) {
-    requestAnimationFrame(() => {
-
-    })
-  })
+export function copyToClipboard (text) {
+  let status = false
+  const ta = document.createElement("textarea")
+  //ta.style.display = 'none'
+  ta.style.position = 'fixed';
+  ta.style.top = 0;
+  ta.style.left = 0;
+  // Ensure it has a small width and height. Setting to 1px / 1em
+  // doesn't work as this gives a negative w/h on some browsers.
+  ta.style.width = '2em';
+  ta.style.height = '2em';
+  // We don't need padding, reducing the size if it does flash render.
+  ta.style.padding = 0;
+  // Clean up any borders.
+  ta.style.border = 'none';
+  ta.style.outline = 'none';
+  ta.style.boxShadow = 'none';
+  // Avoid flash of white box if rendered for any reason.
+  ta.style.background = 'transparent';
+  ta.value = text
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    status = document.execCommand('copy');
+  } catch (err) { }
+  document.body.removeChild(ta);
+  return status
 }

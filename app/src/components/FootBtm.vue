@@ -1,12 +1,13 @@
+<!-- some copyrights -->
 <template lang="slm">
-.view.view-user
+.widget.foot-btm
+  
 </template>
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
-  name: 'hello',
-  components: {  },
+  //components: {  },
+  props: [],
+  mixin: [],
   data: () => ({
     
   }),
@@ -15,7 +16,6 @@ export default {
       
     })
   },
-  props: [],
   watch: {},
   beforeMount () {},
   mounted () {},

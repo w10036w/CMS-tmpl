@@ -6,8 +6,7 @@ import { sync } from 'vuex-router-sync'
 sync(store, router)
 
 // progressbar
-import ProgressBar from '~c/ProgressBar.vue'
-const bar = Vue.prototype.$bar = new Vue(ProgressBar).$mount()
+import bar from '~u/bar'
 document.body.appendChild(bar.$el)
 
 // mixins
