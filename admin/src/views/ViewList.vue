@@ -16,7 +16,7 @@
       el-table-column v-else-if="e==='title'" :label="capitalize(e)" inline-template=""
         template
           router-link :to="'/'+opts.model+'/'+row._id" {{ row.title }}
-          a.preview :href="appHost+'/'+row.path" target="_blank" 
+          a.preview :href="appHost+opts.model+'/'+row.path" target="_blank" 
             i.el-icon-search
       el-table-column v-else-if="e==='author'" :label="capitalize(e)" :width="gWidth(e)" sortable="" inline-template=""
         router-link v-if="row.author" :to="'/user/'+row.author._id" {{ row.author.displayName }}
@@ -31,7 +31,7 @@
       el-table-column v-else-if="e==='name'" :label="capitalize(e)" :width="gWidth(e)" inline-template=""
         template
           router-link :to="'/'+opts.model+'/'+row._id" {{ row.name }}
-          a.preview :href="appHost+'/'+row.path" target="_blank" 
+          a.preview :href="appHost+opts.model+'/'+row.path" target="_blank" 
             i.el-icon-search
       el-table-column v-else="" :prop="e" :label="capitalize(e)" :width="gWidth(e)" sortable=""
     el-table-column label="Operation" :context="_self" width="190" inline-template=""
@@ -70,7 +70,7 @@ export default {
         return o
       })
     },
-    appHost () { return this.$store.state.appHost } 
+    appHost () { return window && ('//'+window.location.host.substr(6)+'/') } 
   },
   created () {
     bar.start()

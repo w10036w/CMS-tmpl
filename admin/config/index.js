@@ -1,8 +1,6 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
-const { port, host } = require('../package').config
 const isProd = process.env.NODE_ENV === 'production'
-
 module.exports = {
   build: {
     env: require('./prod.env'),
@@ -25,11 +23,19 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port,
+    port: 8001,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {
+        target: 'http://localhost:8000/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)
@@ -38,6 +44,8 @@ module.exports = {
     cssSourceMap: false,
     domain: 'https://admin.arknodejs.dev'
   },
-  apiHost: `//api.${host}.${isProd?'com':'dev'}`,
-  appHost: `//${host}.${isProd?'com':'dev'}`
+  // apiHost: `https://api.arknodejs.${isProd?'com':'dev'}`,
+  // apiHost: `https://api.arknodejs.com`,
+  // appHost: `https://arknodejs.${isProd?'com':'dev'}`
+  // appHost: `https://arknodejs.com`
 }

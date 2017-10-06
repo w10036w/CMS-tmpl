@@ -2,7 +2,6 @@
 #app
   main
     curr-layout.tmpl :e="e"
-  nav-footer
 </template>
 
 <script>
@@ -51,5 +50,12 @@ for c in cols
 .tmpl
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
-
+main
+  padding-bottom 20px
+.t-center
+  text-align center
+@media (min-width 769px)
+  .tmpl
+    padding-left 20px
+    padding-right 20px
 </style>

@@ -1,7 +1,7 @@
 {
   "name": "Ark Sun Fangzhou",
-  "title": "frontend solution developer",
-  "avatar": "/static/avatar.jpg",
+  "title": "frontend solution",
+  "avatar": "/static/avatar.jpeg",
   "description": "FULL STACK ENGINEER professional in Frontend, Mobile, and Node.js with a successful track record of large website and web app development, familiar with UX/UI design, insight of performance optimization, cutting edge JS knowledge and project management.",
   "experience": [
     {
@@ -12,8 +12,10 @@
       "start": "09/2017",
       "end": "current",
       "items": [
-        "mobile web solution development & consultancy",
-        "project management"
+        "Frontend & Fullstack Development",
+        "Digital Delivery Mobility",
+        "Mobile App (React Native, Weex, iOS)",
+        "Mobile web solution development & consultancy"
       ]
     },
     {
@@ -31,7 +33,7 @@
     {
       "position": "Web Frontend Engineer",
       "link": "http://www.mozat.com/",
-      "firm": "Mozat Pte Co.,Ltd",
+      "firm": "Mozat",
       "icon": "/static/mozat.png",
       "start": "08/2015",
       "end": "12/2016",
@@ -46,7 +48,7 @@
     {
       "position": "Project Frontend Developer",
       "link": "https://icity.smu.edu.sg/",
-      "firm": "iCity Lab, TATA sponsored",
+      "firm": "iCity Lab",
       "icon": "/static/icity-logo.jpg",
       "start": "10/2013",
       "end": "05/2014",
@@ -59,7 +61,7 @@
     {
       "position": "Assistant Project Manager (Intern)",
       "link": "http://www.vocanic.com/",
-      "firm": "Vocanic Social Media",
+      "firm": "Vocanic",
       "icon": "/static/vocanic.png",
       "start": "05/2013",
       "end": "08/2013",
@@ -73,9 +75,10 @@
   "education": [
     {
       "title": "Bachelor of Science",
-      "year": 2015,
+      "start": 2011,
+      "end": 2015,
       "major": "Information System Management and Finance",
-      "school": "Singapore Management University",
+      "school": "SMU",
       "link": "https://www.smu.edu.sg/",
       "icon": "/static/smu.svg"
     }
@@ -114,9 +117,10 @@
       "keyword": [ "Python", "Java", "PHP" ]
     }
   ],
-  "extra": {
-    "language": "Mandarin, English",
-    "attitude": "Open-minded, sharing and ambitious",
-    "motto": "A Designer does not know Backend is not a good Frontend."
+  "sns": {
+    "github": "https://github.com/w10036w",
+    "linkedin": "https://www.linkedin.com/in/sun-fangzhou-b0b03a59",
+    "envelope": "mailto:w10036w@gmail.com",
+    "rss": "https://arknodejs.com"
   }
 }

@@ -6,18 +6,17 @@
     .text
       .name {{ e.name }}
       .title {{ e.title }}
-    .avatar
-      img :src="e.avatar"
+    .avatar :style="'background:url('+e.avatar+') center/cover no-repeat'"
   .exp
     h2
-      i.fa.fa-black-tie.fa-2x
-      |
-        experience
-    .exp-item v-for="el in e.experience" :key="el.firm"
+      i.fa.fa-black-tie.fa-lg
+      | experience
+    .exp-item v-for="(el, i) in e.experience" :key="el.firm"
       .row
         .col.col-3
-          .firm
+          .institute :class="{'active':i===0}"
             a :href="el.link" {{ el.firm }}
+            i.fa.fa-bullseye
           .duration {{ el.start }} - {{ el.end }}
         .col.col-9
           .position {{ el.position }}
@@ -27,20 +26,39 @@
             img :src="el.icon"
   .edu
     h2 
-      i.fa.fa-bullseye.fa-2x
-      |
-        education
-    .edu-item v-for="el in e.education" :key="el.title"
-      .title {{ el.title }}
-      .year {{ el.year }}
-      .major Major in {{ el.major }}
-      .school 
-        a :href="el.link" {{ el.school }}
-      .logo {{ el.icon }}
-  .extra
-    .language {{ e.extra.language }}
-    .attitude {{ e.extra.attitude }}
-    .motto {{ e.extra.motto }}
+      i.fa.fa-suitcase.fa-lg
+      | education
+    .exp-item v-for="(el, i) in e.education" :key="el.title"
+      .row
+        .col.col-3
+          .institute :class="{'active':i===0}"
+            a :href="el.link" {{ el.school }}
+            i.fa.fa-bullseye
+          .duration {{ el.start }} - {{ el.end }}
+        .col.col-9
+          .position {{ el.title }}
+          .major Major in {{ el.major }}
+          .logo 
+            img :src="el.icon"
+  .sns
+    h2
+      i.fa.fa-send-o.fa-lg
+      | One More Thing
+    .exp-item.t-center
+      a :href="e.sns.github" target="_blank"
+        i.fa.fa-github.fa-2x
+      a :href="e.sns.linkedin" target="_blank"
+        i.fa.fa-linkedin.fa-2x
+      a :href="e.sns.envelope" target="_blank"
+        i.fa.fa-envelope.fa-2x
+      a :href="e.sns.rss" target="_blank"
+        i.fa.fa-rss.fa-2x
+  .copyright
+    .t-center 
+      | This template is origined by 
+      a href="https://www.behance.net/gallery/9714739/Resume-Vita" target="_blank" Sven Kaiser
+      | .
+
 </template>
 <script>
 export default {
@@ -51,7 +69,7 @@ export default {
 </script>
 <style lang="stylus">
 c-blue = #1ca9ca
-c-grey = #707780
+c-grey = #203630
 c-border = #e8e8ea
 .tmpl-vita
   font-family 'Open Sans', sans-serif
@@ -77,7 +95,6 @@ c-border = #e8e8ea
     .text
       padding 40px 210px 40px 90px
       .name 
-        font-style italic 
         font-weight bold
         font-size 3em
       .title
@@ -86,21 +103,19 @@ c-border = #e8e8ea
         font-size 1.8em
     .avatar
       position absolute
-      top 0
+      top 25px
       right 0
-      height 200px
-      width 200px
+      height 150px
+      width 150px
       overflow hidden
-      border-radius 20px
-      img
-        width 100%
+      border-radius 35px
   h2
     text-transform uppercase
     color c-blue
     .fa
       margin-right 15px
       vertical-align middle
-  .exp
+  .exp, .edu, .sns
     .logo
       width 200px
       height 50px
@@ -110,8 +125,18 @@ c-border = #e8e8ea
       .col-3
         box-sizing border-box
         padding-left 3.6em
-        .firm
+        .institute
+          position relative
           font-size 1.4em
+          font-weight bold
+          i
+            color #d2d2d2
+            position absolute
+            top 5px 
+            right -10px
+            z-index 100
+          &.active i
+            color #1ca9ca
         .duration
           line-height 1.5em
           font-size 1.2em
@@ -123,6 +148,7 @@ c-border = #e8e8ea
         box-sizing border-box
         border-left 2px solid c-border
         padding-left 3.6em
+        padding-bottom 1em
         .position
           font-size 1.2em
         .items
@@ -134,11 +160,18 @@ c-border = #e8e8ea
           top 0
           right 0
           width 100px
-          height 80px
+          height 100px
           overflow hidden
           opacity .5
           img
             width 100%
     .duration
       text-transform capitalize
+  .sns
+    margin-bottom 20px
+    .exp-item
+      .fa
+        margin-left 20px
+        margin-right 20px
+        color c-blue
 </style>

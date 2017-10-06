@@ -1,9 +1,8 @@
 import io from 'axios'
-import config from '../../config'
 
 // notice: if [GET], the body is { params } (if any)
 function send ({ method='get', path, body, params }) {
-  const uri = config.apiHost + path
+  const uri = '/api' + path
   if (params && !body) body = { params }
   return io[method](uri, body)
     .then(d => d)
@@ -18,7 +17,6 @@ function send ({ method='get', path, body, params }) {
 }
 
 export default {
-  appHost: config.appHost,
   addAuth (token) {
     io.interceptors.request.use(config => {
       config.headers['authorization'] = token

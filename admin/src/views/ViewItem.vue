@@ -1,9 +1,9 @@
 <template lang="slm">
 .view.view-item
-  el-row :gutter="20"
+  el-row :gutter="20" v-if="current"
     template v-if="opts.name==='user'"
       el-col :span="16"
-        el-form label-width="90px" :model="current" v-if="current"
+        el-form label-width="90px" :model="current" 
           el-form-item label="Username"
             el-input v-model="current.username"
           el-form-item label="DisplayName"
@@ -22,7 +22,7 @@
             el-input v-model="current.bio"
     template v-else-if="opts.name==='article'"
       el-col :span="18"
-        el-form label-width="80px" :model="current" v-if="current"
+        el-form label-width="80px" :model="current"
           el-form-item label="Title"
             el-input v-model="current.title"
           el-row :gutter="20"
@@ -60,7 +60,7 @@
             el-input v-model="current.name"
           el-form-item label="Path"
             el-input v-model="current.path"
-    el-col :span="opts.name==='article'?6:8" v-if="current"
+    el-col :span="opts.name==='article'?6:8"
       el-form label-width="100px"
         el-form-item label-width="20px"
           el-button-group

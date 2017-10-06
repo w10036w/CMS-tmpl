@@ -9,7 +9,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   modules: { auth },
   state: {
-    appHost: api.appHost,
     logs: [],
     loading: false,
     list: [],
