@@ -25,8 +25,11 @@ module.exports = (app, config) => {
         apiCache.set(key, resp)
       }
       res.status(resp.status)
-      data_env!=='prod' && res.header("x-node-proxy", uri) // debug
-      data_env!=='prod' && res.header("x-node-proxy-duration", `${Date.now()-start}ms`) // debug
+      // for debug
+      if (data_env !== 'prod') {
+        res.header("x-node-proxy", uri)
+        res.header("x-node-proxy-duration", `${Date.now()-start}ms`)
+      }
       res.send(resp.data)
     }).catch(e => {
       console.log(e.response && e.response.status)

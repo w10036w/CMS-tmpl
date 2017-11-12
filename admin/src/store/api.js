@@ -5,15 +5,16 @@ function send ({ method='get', path, body, params }) {
   const uri = '/api' + path
   if (params && !body) body = { params }
   return io[method](uri, body)
-    .then(d => d)
-    .catch(e => {
-      let msg
-      if (e.response) msg = e.response.message
-      else if (e.request) msg = e.request.message
-      else msg = e.message
-      console.error(`[API ${method.toUpperCase()}] ${msg}`)
-      return msg
-    })
+    // .then(d => d)
+    // .catch(e => {
+    //   console.log('e: ',e )
+    //   let msg
+    //   if (e.response) msg = e.response.message
+    //   else if (e.request) msg = e.request.message
+    //   else msg = e.message
+    //   console.error(`[API ${method.toUpperCase()}] ${msg}`)
+    //   return e
+    // })
 }
 
 export default {

@@ -9,11 +9,13 @@
 import { mapGetters } from 'vuex'
 const AsideMenu = () => import('~c/AsideMenu')
 const NavMenu = () => import('~c/NavMenu')
+import api from './store/api'
 import { ls } from '~u/storage'
 
 export default {
   components: { NavMenu, AsideMenu },
   data: () => ({
+    lsToken: ''
   }),
   computed: {
     ...mapGetters({
@@ -44,23 +46,20 @@ export default {
       }
     },
     verify () {
-        // if no store/auth/authed
-      if (!this.authed) {
-        if (ls.get('token')) {
-          this.$store.dispatch('auth/verify', ls.get('token'))
-            .then(j => {
-              if (!j) {
-                this.notify('Token invalid or expired')
-                this.$router.push({ name: 'ViewLogin' })
-              } else {
-                this.initCheck(1)
-              }
-            })
-        } else {
-          this.notify()
+      if (this.authed) return
+      if (!this.lsToken) return this.$router.push({ name: 'ViewLogin' })
+      this.$store.dispatch('auth/verify', this.lsToken)
+        .then(j => {
+          if (!j) {
+            this.notify('Token invalid or expired')
+            this.$router.push({ name: 'ViewLogin' })
+          } else {
+            this.initCheck(1)
+          }
+        }).catch(e => {
+          this.notify('Token invalid or expired')
           this.$router.push({ name: 'ViewLogin' })
-        }
-      }
+        })
     },
     notify(message, title, type='error', color='red') {
       this.$notify[type]({
@@ -70,6 +69,8 @@ export default {
     }
   },
   beforeMount () {
+    this.lsToken = ls.get('token')
+    this.lsToken && api.addAuth(this.lsToken)
     this.initCheck()
   },
   mounted () {

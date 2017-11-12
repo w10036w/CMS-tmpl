@@ -1,7 +1,7 @@
 {
-  "name": "vue-ssr-template",
+  "name": "arknodejs-app",
   "version": "1.0.0",
-  "description": "Vue SSR Template",
+  "description": "vue-ssr-app",
   "author": "w10036w<w10036w@gmail.com>",
   "private": true,
   "license": "Apache2.0",

@@ -1,13 +1,19 @@
-# VUE SSR TEMPLATE
+# Arknodejs.com application
+
+Derived from self-made `Vue SSR template` (forked from [vue-hackernews-2.0](https://github.com/vuejs/vue-hackernews-2.0))
 
 ## Checklist
-- website Name & Logo & Meta: /pubic/*, /index.template.html, /server.js, /src/mixin/meta.js
-- [router](https://router.vuejs.org/en/): /src/router/index.js
-- [vuex](https://vuex.vuejs.org/): /src/store/*
 
+- website Name & Logo & Meta: /pubic/*, /index.template.html, /server.js, /src/mixin/meta.js
+- [vue-router](https://router.vuejs.org/en/): /src/router/index.js
+- [vuex](https://vuex.vuejs.org/): /src/store/*
+- [slm](https://github.com/slm-lang/slm): html template lang
+- [stylus](http://stylus-lang.com/) pre-css lang
+- webpack 2 level code splitting
 
 ## Features
 
+> borrow from vue-hackernews-2.0
 - Server Side Rendering
   - Vue + vue-router + vuex working together
   - Server-side data pre-fetching
@@ -15,10 +21,6 @@
   - Automatically inlines CSS used by rendered components only
   - Preload / prefetch resource hints
   - Route-level code splitting
-- Progressive Web App
-  - App manifest
-  - Service worker
-  - 100/100 Lighthouse score
 - Single-file Vue Components
   - Hot-reload in development
   - CSS extraction for production
@@ -43,6 +45,10 @@ npm run build
 npm start
 ```
 
+## Awesome Examples using this template
+
+- [ELLE Singapore](https://www.elle.sg)
+
 ## License
 
-MIT
+Apache 2.0

@@ -1,11 +1,7 @@
 ## for Mac
 
 # setup vars
-PATH_NGINX = /usr/local/etc/nginx
-PATH_WWW = /usr/local/var/www
-
-ENV = com
-DOMAIN = arknodejs.$(ENV)
+DOMAIN = arknodejs.com
 
 COLORS:=$(shell tput colors 2> /dev/null)
 ifeq ($(COLORS), 256)
@@ -47,16 +43,19 @@ ifeq (, $(shell which nginx))
 	@apt-get install nginx
 endif
 	@echo "$(C_GREEN)nginx installed$(C_RESET)"
-	@cp ${PATH_WWW}/$(DOMAIN)/conf/$(DOMAIN) ${PATH_NGINX}/sites/${DOMAIN}
+	@cp -b /var/www/$(DOMAIN)/config/$(DOMAIN) /etc/nginx/sites-available/
+	@ln -s /etc/nginx/sites-available/$(DOMAIN) /etc/nginx/sites-enabled/$(DOMAIN)
 	@echo "$(C_GREEN)nginx configured$(C_RESET)"
 
 prep-certbot:
 ifeq (, $(shell which certbot))
 	@echo "$(C_BLUE)certbot installing...$(C_RESET)"
-	@brew update && brew install certbot
+	@apt-get install software-properties-common
+	@add-apt-repository ppa:certbot/certbot
+	@apt-get update && apt-get install certbot
 endif
 	@echo "$(C_GREEN)certbot installed$(C_RESET)"
-	@sudo certbot certonly --standalone -d $(DOMAIN)
+	@certbot certonly --standalone -d $(DOMAIN)
 	@echo "$(C_GREEN)certbot certificate generated$(C_RESET)"
 	
 prep-mongo:
@@ -105,42 +104,39 @@ service-end:
 	@service mongod stop
 	@nginx -s stop
 
-test-nginx: 
+test: 
 	@echo "<-- nginx test start -->"
+	@systemctl status nginx
 	@nginx -t
 	@echo "<--  nginx test end  -->"
 
 clean:
 	@rm -rf admin/node_modules
-	@rm -rf api/node_modules
+	@rm -rf back/node_modules
 	@rm -rf front/node_modules
 	@echo	"node_modules clean complete"
 
 install:
-	@cd api && npm i --only=production
+	@cd back && npm i --only=production
 	@cd ..
 	@cd front && npm i --only=production
 	@cd ..
 	@echo	"npm install production complete"
 
 start: start-api start-admin start-app 
-start-admin:
-	@echo "start admin"
-	@cd admin && pm2 start pm2-prod.json
-	@cd ..
 start-api:
 	@echo "start api"
-	@cd api && pm2 start pm2-prod.json
+	@cd back && pm2 start process.json
 	@cd ..
 start-app:
 	@echo "start app"
-	@cd app && pm2 start process.json
+	@cd front && pm2 start process.json
 	@cd ..
 
 dev: dev-api dev-admin dev-app
 dev-api:
 	@echo "dev api"
-	@cd api && pm2 start pm2-dev.json
+	@cd back && pm2 start process.json --env development
 	@cd ..
 dev-app:
 	@echo "dev app"
@@ -148,7 +144,7 @@ dev-app:
 	@cd ..
 dev-admin:
 	@echo "dev admin"
-	@cd admin && pm2 start pm2-dev.json
+	@cd admin && pm2 start process.json --env development
 	@cd ..
 
 end:

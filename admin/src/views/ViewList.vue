@@ -4,7 +4,7 @@
     router-link :to="'/create/'+opts.model" 
       el-button type="success" CREATE
 
-  el-table :data="fmtedList" v-loading.body="loading" :default-sort="{ prop: 'createAt', order: 'ascending' }" stripe="" border="" @selection-change="selectItem"
+  el-table :data="fmtedList" v-loading.body="loading" :default-sort="{ prop: 'createAt', order: 'ascending' }" stripe="" border=false @selection-change="selectItem"
     el-table-column type="selection" width="55"
     template v-for="e in opts.columns"
       el-table-column v-if="e==='hidden'" :prop="e" :label="capitalize(e)" :width="90"

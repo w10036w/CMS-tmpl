@@ -8,6 +8,7 @@ const wl = [
   `https://arknodejs.${suff}`,
   `https://www.arknodejs.${suff}`,
   `https://admin.arknodejs.${suff}`,
+  `http://localhost:3000`,
 ]
 // whitelist filter
 function wlFilter(ctx) {

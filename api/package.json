@@ -1,7 +1,7 @@
 {
   "name": "arkcms-api",
   "version": "1.0.0",
-  "description": "A production-ready node.js CMS skeleton built on koa2, mongodb, redis, using mocha-chai-is to do unit test and documented with swagger",
+  "description": "A production-ready node.js CMS skeleton built on koa2, mongodb, redis (yet), using mocha-chai-is to do unit test and documented with swagger",
   "keywords": [
     "koa2",
     "jwt",
