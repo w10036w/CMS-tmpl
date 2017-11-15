@@ -1,4 +1,3 @@
-// all countable (like, visit to redis)
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const ObjectId  = Schema.ObjectId;
@@ -19,7 +18,6 @@ const schema = new Schema(Object.assign({
   tags: [{ type: ObjectId, ref: 'tag' }],
   category: { type: ObjectId, required: true, ref: 'category' },
   allowComment: { type: Boolean, default: true },
-  // not recorded in db
 }, common));
 
 schema.index({ top: -1, _id: -1 })
