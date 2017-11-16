@@ -1,4 +1,4 @@
-## for Mac
+## for Ubuntu
 
 # setup vars
 DOMAIN = arknodejs.com
@@ -26,11 +26,9 @@ else ifeq ($(COLORS), 16)
     C_WHITE=\033[1;37m
 endif
 
-hello:
-	@echo "hello $(DOMAIN)"
-# profile:
-# @cp -b /var/www/arknodejs/config/profile.arknodejs.com /etc/nginx/sites-available
-# @ln -s /etc/nginx/sites-available/profile.arknodejs.com /etc/nginx/sites-enabled/profile.arknodejs.com
+profile:
+	@cp -b /var/www/arknodejs/config/profile.arknodejs.com /etc/nginx/sites-available
+	@ln -s /etc/nginx/sites-available/profile.arknodejs.com /etc/nginx/sites-enabled/profile.arknodejs.com
 
 all: prep service clean install service-start start
 
@@ -110,41 +108,15 @@ test:
 	@nginx -t
 	@echo "<--  nginx test end  -->"
 
-clean:
-	@rm -rf admin/node_modules
-	@rm -rf back/node_modules
-	@rm -rf front/node_modules
-	@echo	"node_modules clean complete"
-
-install:
-	@cd back && npm i --only=production
-	@cd ..
-	@cd front && npm i --only=production
-	@cd ..
-	@echo	"npm install production complete"
-
-start: start-api start-admin start-app 
+start: start-api start-app 
 start-api:
 	@echo "start api"
-	@cd back && pm2 start process.json
-	@cd ..
-start-app:
-	@echo "start app"
-	@cd front && pm2 start process.json
+	@cd api && pm2 start pm2-prod.json
 	@cd ..
 
-dev: dev-api dev-admin dev-app
-dev-api:
-	@echo "dev api"
-	@cd back && pm2 start process.json --env development
-	@cd ..
-dev-app:
-	@echo "dev app"
-	@cd front && pm2 start process.json --env development
-	@cd ..
-dev-admin:
-	@echo "dev admin"
-	@cd admin && pm2 start process.json --env development
+start-app:
+	@echo "start app"
+	@cd app && pm2 start pm2-prod.json
 	@cd ..
 
 end:

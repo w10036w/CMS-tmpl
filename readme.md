@@ -27,7 +27,9 @@ Source of personal website [arknodejs.com](https://arknodejs.com), including 3 p
 
 ### API
 
-- docs: ![apidoc](https://om1lnfu9j.qnssl.com/apidoc.png)
+- docs: [http://localhost:8000/docs/api-yaml.html](http://localhost:8000/docs/api-yaml.html)
+
+![apidoc](https://om1lnfu9j.qnssl.com/apidoc.png)
 
 ### APP
 
