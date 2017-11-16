@@ -1,21 +1,32 @@
 <template lang="slm">
 #app
   main
-    curr-layout.tmpl :e="e"
+    TmplVita.tmpl v-if="tmpl==='vita'" :e="e" :lang="lang"
 </template>
 
 <script>
-import CurrLayout from './components/Vita'
-import NavFooter from './components/NavFooter'
-import e from './profile.json'
-import cn from './profile.json'
+import TmplVita from './components/Vita'
+import data from './profile.json'
+import { URL } from './utils/url'
 
 export default {
   name: 'app',
-  components: { CurrLayout, NavFooter },
+  components: { TmplVita },
   data: () => ({
-    e: e
+    e: data.en,
+    lang: 'en',
+    tmpl: 'vita'
   }),
+  created () {
+    const url = URL()
+    const lang = url.search.lang
+    if (lang) {
+      this.e = data[lang]
+      this.lang = lang
+    }
+    if (url.search.tmpl) 
+      this.tmpl = url.search.tmpl
+  }
 }
 </script>
 
@@ -54,7 +65,8 @@ main
   padding-bottom 20px
 .t-center
   text-align center
-@media (min-width 769px)
+  
+@media screen and (max-width 640px)
   .tmpl
     padding-left 20px
     padding-right 20px

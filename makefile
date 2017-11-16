@@ -1,4 +1,4 @@
-## for Mac
+## for Ubuntu
 
 # setup vars
 DOMAIN = arknodejs.com

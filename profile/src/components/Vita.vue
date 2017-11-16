@@ -7,10 +7,20 @@
       .name {{ e.name }}
       .title {{ e.title }}
     .avatar :style="'background:url('+e.avatar+') center/cover no-repeat'"
+  .summary
+    h2
+      i.fa.fa-user.fa-lg
+      | {{ summary }}
+    summary v-html="e.summary"
+  .tech
+    h2
+      i.fa.fa-sitemap.fa-lg
+      | {{ tech }}
+    summary v-html="e.tech"
   .exp
     h2
       i.fa.fa-black-tie.fa-lg
-      | experience
+      | {{ experience }}
     .exp-item v-for="(el, i) in e.experience" :key="el.firm"
       .row
         .col.col-3
@@ -26,8 +36,8 @@
             img :src="el.icon"
   .edu
     h2 
-      i.fa.fa-suitcase.fa-lg
-      | education
+      i.fa.fa-university.fa-lg
+      | {{ education }}
     .exp-item v-for="(el, i) in e.education" :key="el.title"
       .row
         .col.col-3
@@ -37,13 +47,17 @@
           .duration {{ el.start }} - {{ el.end }}
         .col.col-9
           .position {{ el.title }}
-          .major Major in {{ el.major }}
+          .major {{ el.major }}
           .logo 
             img :src="el.icon"
-  .sns
+  .links
     h2
       i.fa.fa-send-o.fa-lg
-      | One More Thing
+      | links
+    template v-if="e.links"
+      .exp-item v-for="(v, k) in e.links" :key="k"
+        a :href="v" target="_blank" {{ k }}
+  .sns
     .exp-item.t-center
       a :href="e.sns.github" target="_blank"
         i.fa.fa-github.fa-2x
@@ -55,15 +69,28 @@
         i.fa.fa-rss.fa-2x
   .copyright
     .t-center 
-      | This template is origined by 
-      a href="https://www.behance.net/gallery/9714739/Resume-Vita" target="_blank" Sven Kaiser
-      | .
+      a href="https://www.behance.net/gallery/9714739/Resume-Vita" target="_blank" Vita template 
+      | by Sven Kaiser.
 
 </template>
 <script>
 export default {
   name: 'tmpl-vita',
-  props: ['e']
+  props: ['e', 'lang'],
+  data: () => ({
+    summary: 'summary',
+    tech: 'tech stack',
+    experience: 'experience',
+    education: 'education',
+  }),
+  created () {
+    if (this.lang==='ch') {
+      this.summary = '职业方向'
+      this.tech = '技术储备'
+      this.experience = '工作履历'
+      this.education = '最高学历'
+    }
+  }
 }
 
 </script>
@@ -74,14 +101,26 @@ c-border = #e8e8ea
 .tmpl-vita
   font-family 'Open Sans', sans-serif
   background url(/static/background-gray.png) left/contain no-repeat
-  width 1060px
+  max-width 1060px
+  width 100%
   margin 0 auto
   a
     color unset
     text-decoration none
     border-bottom .5px solid c-blue
+    transition all .4s ease
+    &:hover
+      color c-blue
+      background-color c-border
   header
-    position relative
+    position sticky 
+    top 0
+    left -10px
+    width 100%
+    z-index 1000
+    background-color white
+    padding-bottom  15px
+    border-bottom 1px solid c-border
     .logo
       position absolute
       top 60px
@@ -112,10 +151,20 @@ c-border = #e8e8ea
   h2
     text-transform uppercase
     color c-blue
+    position relative
+    padding-left 2em
     .fa
-      margin-right 15px
+      position absolute
+      top .2em
+      left 0
+      width 1.5em
+      height 1.5em
       vertical-align middle
-  .exp, .edu, .sns
+  summary 
+    padding-left  3em
+    padding-right  3em
+  .tech, .exp, .edu, .sns
+    padding-top 15px
     .logo
       width 200px
       height 50px
@@ -124,7 +173,7 @@ c-border = #e8e8ea
     .exp-item
       .col-3
         box-sizing border-box
-        padding-left 3.6em
+        padding-left 3em
         .institute
           position relative
           font-size 1.4em
@@ -156,7 +205,6 @@ c-border = #e8e8ea
           line-height 1.4em
         .logo
           position absolute
-          z-index -1
           top 0
           right 0
           width 100px
@@ -168,10 +216,14 @@ c-border = #e8e8ea
     .duration
       text-transform capitalize
   .sns
-    margin-bottom 20px
+    padding 20px 0
     .exp-item
       .fa
         margin-left 20px
         margin-right 20px
+        padding 10px 5px
         color c-blue
+      a
+        border none
+        display inline-block
 </style>
