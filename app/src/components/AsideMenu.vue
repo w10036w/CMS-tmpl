@@ -61,7 +61,7 @@ aside
   width 300px
   font-family Dosis
   .selfie
-    background url("https://om1lnfu9j.qnssl.com/20171005/avatar.jpeg") center/cover no-repeat
+    background url("https://avatars2.githubusercontent.com/u/3350260?s=460&v=4") center/cover no-repeat
     margin 0 auto 10px
     width 100px
     height 100px

@@ -3,7 +3,7 @@ const proto = base.proto
 module.exports = Object.assign({}, base, {
   // data_env=prod
   host: 'https://arknodejs.com',
-  apiHost: 'http://localhost:8000',
+  apiHost: 'http://api.arknodejs.com',
   
   cache: {
     max: 1000,

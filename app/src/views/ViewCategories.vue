@@ -5,7 +5,7 @@
     template v-if="categories[selected].articles.length"
       h2.text 
         strong.success {{ categories[selected].articles.length }} 
-        | Articles tagged with 
+        | Articles under Category 
         strong.success {{ categories[selected].category.name }}
       ul.classified-articles
         li v-for="el in categories[selected].articles"

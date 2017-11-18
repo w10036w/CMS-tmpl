@@ -23,16 +23,17 @@ Source of personal website [arknodejs.com](https://arknodejs.com), including 3 p
 - Run MongoDb: `mongod` in terminal
 - Start api: `npm run dev` in `/api` or `make dev-api` in project root.
 
-## Screenshots
+## Online Demo
 
-### API
+- [local API docs](http://localhost:8000/docs/api-yaml.html), [Online API docs](https://api.arknodejs.com/docs/api-yaml.html#/)
+- [Main App](https://arknodejs.com/)
+- [Admin Screenshot (yet)]
+- [Profile](https://profile.arknodejs.com/)
 
-- docs: [http://localhost:8000/docs/api-yaml.html](http://localhost:8000/docs/api-yaml.html)
+## Todo List
 
-![apidoc](https://om1lnfu9j.qnssl.com/apidoc.png)
-
-### APP
-
-### ADMIN
-
-### PROFILE
+- [ ] Docker
+- [ ] Redis Support
+- [ ] Other Comments Plugin
+- [ ] Admin Dashboard
+- [ ] Server push notification

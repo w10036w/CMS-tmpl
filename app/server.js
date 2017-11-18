@@ -12,7 +12,8 @@ const isProd = node_env === 'production'
 const data_env = process.env.DATA_ENV || 'dev'
 const config = require('./config/'+data_env)
 
-const proxy = require('./proxy')
+// when has no control of nginx, proxy api request here
+// const proxy = require('./proxy')
 const sitemap = require('./sitemap')
 
 const serverInfo =
@@ -23,7 +24,7 @@ const app = express()
 
 // plugin mode
 sitemap(app, config)
-proxy(app, config)
+// proxy(app, config)
 
 const template = fs.readFileSync(resolve('./src/index.template.html'), 'utf-8')
 

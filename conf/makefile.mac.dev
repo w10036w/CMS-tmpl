@@ -1,4 +1,4 @@
-## for Ubuntu
+## for Mac
 
 # setup variables
 ## keep the same domain name, project name and root folder name
@@ -32,9 +32,16 @@ else ifeq ($(COLORS), 16)
     C_WHITE=\033[1;37m
 endif
 
-all: prep service clean install service-start start
+all: prep service clean build service-start start
 
-prep: prep-nginx prep-certbot prep-mongo prep-redis prep-nodejs prep-pm2 prep-yarn
+prep: prep-brew prep-nginx prep-certbot prep-mongo prep-redis prep-nodejs prep-pm2
+
+prep-brew:
+ifeq (, $(shell which brew))
+	@echo "$(C_BLUE)homebrew installing...$(C_RESET)"
+	@/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+endif
+	@echo "$(C_GREEN)homebrew installed$(C_RESET)"
 
 prep-nginx:
 ifeq (, $(shell which nginx))
@@ -43,7 +50,6 @@ ifeq (, $(shell which nginx))
 	@apt-get install nginx
 endif
 	@echo "$(C_GREEN)nginx installed$(C_RESET)"
-	@echo "$(C_BLUE)copy nginx configuration ...$(C_RESET)"
 	@cp -b /var/www/$(DOMAIN)/config/$(DOMAIN) /etc/nginx/sites-available/
 	@ln -s /etc/nginx/sites-available/$(DOMAIN) /etc/nginx/sites-enabled/$(DOMAIN)
 	@echo "$(C_GREEN)nginx configured$(C_RESET)"
@@ -56,7 +62,7 @@ ifeq (, $(shell which certbot))
 	@apt-get update && apt-get install certbot
 endif
 	@echo "$(C_GREEN)certbot installed$(C_RESET)"
-	@certbot certonly --standalone -d $(DOMAIN) -d api.$(DOMAIN) -d admin.$(DOMAIN)  -d www.$(DOMAIN) -d profile.$(DOMAIN)
+	@certbot certonly --standalone -d $(DOMAIN)
 	@echo "$(C_GREEN)certbot certificate generated$(C_RESET)"
 	
 prep-mongo:
@@ -79,25 +85,17 @@ endif
 prep-nodejs:
 ifeq (, $(shell which node))
 	@echo "$(C_BLUE)nodejs installing...$(C_RESET)"
-	@curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+	@curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 	@apt-get install -y nodejs
 endif
 	@echo "$(C_GREEN)nodejs installed$(C_RESET)"
 
 prep-pm2:
 ifeq (, $(shell which pm2))
-	@echo "$(C_BLUE)pm2 installing...$(C_RESET)"
+	@echo "$(C_GREEN)pm2 installing...$(C_RESET)"
 	@npm i -g pm2
 endif
 	@echo "$(C_GREEN)pm2 installed$(C_RESET)"
-
-prep-yarn:
-ifeq (, $(shell which yarn))
-	@echo "$(C_BLUE)yarn installing...$(C_RESET)"
-	@npm i -g yarn
-endif
-	@echo "$(C_GREEN)yarn installed$(C_RESET)"
-
 
 conf-redis:
 	@nano /etc/redis/redis.conf
@@ -105,18 +103,17 @@ conf-redis:
 # maxmemory 128mb
 # maxmemory-policy allkeys-lru
 service-start:
+	@sudo mongod
 	@nginx
-	@service mongod start
-	@systemctl restart redis-server.service
-	@systemctl enable redis-server.service
-service-end:
-	@service mongod stop
-	@nginx -s stop
+	@redis-server
+
+# need to add service-end
+#service-end:
+
 
 test: 
 	@echo "$(C_BLUE)<-- nginx test start -->$(C_RESET)"
-	@systemctl status nginx
-	@nginx -t
+	@sudo nginx -t
 	@echo "$(C_BLUE)<-- nginx test end -->$(C_RESET)"
 
 ### exploring parallel solutions
@@ -145,6 +142,7 @@ start-app:
 	@echo "start $(DIR_APP)"
 	@cd $(DIR_APP) && pm2 start pm2-prod.json
 	@cd ..
+
 end:
 	@pm2 stop api app
 

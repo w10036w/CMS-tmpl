@@ -19,9 +19,9 @@
 /api/logs/
 
 # dist
-#/admin/dist/
-#/app/dist/
-#/profile/dist/
+/admin/dist/
+/app/dist/
+/profile/dist/
 
 # fake data
 /admin/data/

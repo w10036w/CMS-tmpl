@@ -18,7 +18,11 @@ export default {
   computed: {
     ...mapGetters(['md'])
   },
-  watch: {},
+  watch: {
+    '$route' () {
+      this.toggleAside()
+    }
+  },
   beforeMount () {
     this.domAside = document.querySelector('aside')
   },

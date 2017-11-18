@@ -3,7 +3,7 @@
   .block.t-center v-if="type==='tag'"
     | Articles tagged with 
     strong.primary {{ $route.params.path }}
-  .block.t-center v-else=""
+  .block.t-center v-else-if="type==='category'"
     | Articles under category 
     strong.success {{ $route.params.path }}
   // list of articles
