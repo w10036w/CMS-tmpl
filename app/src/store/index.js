@@ -8,6 +8,7 @@ Vue.use(Vuex)
 export function createStore () {
   return new Vuex.Store({
     state: {
+      // md: null
       page: 1,
       categories: [],
       tags: [],
@@ -15,10 +16,9 @@ export function createStore () {
       articles: [],
       article_ctx: [null, null],
       article: {},
-      md: null
     },
     getters: {
-      md: state => state.md,
+      // md: state => state.md,
       page: state => state.page,
       categories: state => state.categories,
       tags: state => state.tags,
@@ -79,16 +79,16 @@ export function createStore () {
       set_page ({ commit }, pageNo) {
         commit('SET_PAGE', pageNo)
       },
-      set_mobile_detect ({ commit }, md) {
-        const ua = {
-          tablet: md.tablet(),
-          mobile: md.mobile()
-        }
-        return commit('SET_MD', ua)
-      },
+      // set_mobile_detect ({ commit }, md) {
+      //   const ua = {
+      //     tablet: md.tablet(),
+      //     mobile: md.mobile()
+      //   }
+      //   return commit('SET_MD', ua)
+      // },
     },
     mutations: {
-      SET_MD: (state, md) => state.md = md ,
+      // SET_MD: (state, md) => state.md = md,
       SET_PAGE: (state, pageNo) => state.page = pageNo,
       SET_CATEGORIES: (state, categories) => state.categories = categories,
       SET_TAGS: (state, tags) => state.tags = tags,

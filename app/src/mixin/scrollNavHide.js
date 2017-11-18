@@ -20,10 +20,10 @@ const mx = {
     }
   },
   mounted () {
-    if (this.md.mobile) evListen('scroll', this._scrollNavHide)
+    if (window.innerWidth<769) evListen('scroll', this._scrollNavHide)
   },
   beforeDestroy () {
-    if (this.md.mobile) evListen('scroll', this._scrollNavHide, false)
+    if (window.innerWidth<769) evListen('scroll', this._scrollNavHide, false)
   }
 }
 

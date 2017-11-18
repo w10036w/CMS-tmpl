@@ -10,27 +10,11 @@
     el-menu-item index="/settings" Settings
 </template>
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
   name: 'aside-menu',
-  components: {  },
-  data: () => ({
-    
-  }),
   computed: {
     activeTab () { return this.$route.path },
-    ...mapGetters({
-      
-    })
   },
-  props: [],
-  watch: {},
-  beforeMount () {},
-  mounted () {},
-  methods: {
-
-  }
 }
 </script>
 <style lang="stylus" scoped>

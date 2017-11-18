@@ -9,13 +9,20 @@ Source of personal website [arknodejs.com](https://arknodejs.com), including 3 p
 - `/api`: CMS Backend, koa2-mongodb-restful with full swagger-ui documentation, partial mocha-chai test
 - `/app`: CMS Frontend, using Vue SSR template, [readme](../app/readme.md)
 - `/admin`: CMS admin portal, using Vue SPA template
-- `/profile`: Non CMS, using Vue SPA template, personal profile template. Just create Json file of your profile and update all templates.
-- `/conf`: nginx server configuration, automated deployment makefile
+- `/profile`: Non CMS, using Vue SPA template, personal profile template. Create Json file of your profile and apply to all templates.
+- `/conf`: nginx server configuration, makefile backup for Mac and Ubuntu
+
+## How to install
+
+- Fork the project and clone to your server / local
+- Run `make all`
 
 ## Dependencies
 
-- Install **Mongodb** (`brew install mongodb` for Mac) and create the empty folder under root `/`: `/data/db`
-- **PM2** for production process managment and **nodemon** for hot reload API server `npm i pm2 nodemon -g`
+- **make**: This project uses make to setup dependencies
+- **Mongodb** requires an empty folder under root: `/data/db`
+- **nodemon** for hot reload API server `npm i nodemon -g`
+- **PM2** for production process managment `npm i pm2 -g`
 - Create `prod.js` under `/api/conf/` to setup configuration in proudction.
 
 ## Start API (others refer to project's readme.md)
@@ -27,7 +34,7 @@ Source of personal website [arknodejs.com](https://arknodejs.com), including 3 p
 
 - [local API docs](http://localhost:8000/docs/api-yaml.html), [Online API docs](https://api.arknodejs.com/docs/api-yaml.html#/)
 - [Main App](https://arknodejs.com/)
-- [Admin Screenshot (yet)]
+- Admin Screenshot (yet)
 - [Profile](https://profile.arknodejs.com/)
 
 ## Todo List

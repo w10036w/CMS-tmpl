@@ -28,10 +28,7 @@ aside.flex.middle_center.trans-3 @mouseover="moveBg" @mouseleave="moveBgBack" re
         i.fa.fa-search.fa-lg
 </template>
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
-  name: '',
   data: () => ({
     searchUrl: 'https://www.google.com/webhp#newwindow=1&safe=strict&q=site:https://arknodejs.com'
   }),

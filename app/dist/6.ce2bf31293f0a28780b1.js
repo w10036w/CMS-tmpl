@@ -1,1 +1,0 @@
-webpackJsonp([6],{42:function(t,e,n){var r=n(1)(null,n(81),null,null,null);t.exports=r.exports},81:function(t,e){t.exports={render:function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("div",{staticClass:"page page-error"},[n("main",[n("h1",[t._v("404 Not Found")]),n("router-link",{attrs:{to:"/"}},[t._v("Back to Home")])],1)])},staticRenderFns:[]}}});

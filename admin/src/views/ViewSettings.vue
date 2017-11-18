@@ -21,7 +21,6 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-//import Comp from '~c/Comp.vue'
 
 export default {
   name: 'view-home',
@@ -37,10 +36,6 @@ export default {
       authed: 'auth/authed'
     })
   },
-  props: [],
-  watch: {},
-  beforeMount () {},
-  mounted () {},
   methods: {
     changePass () {
       this.$store.dispatch('change_pass', 
@@ -54,10 +49,3 @@ export default {
   }
 }
 </script>
-<style lang="stylus" scoped>
-@import '../styl/__var'
-.view-home
-  background-color rgba(white, .8)
-  .test
-    color c-i-red
-</style>

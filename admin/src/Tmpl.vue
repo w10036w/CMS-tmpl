@@ -7,7 +7,7 @@ import { mapGetters } from 'vuex'
 //import Comp from '~c/Comp.vue'
 
 export default {
-  name: 'hello',
+  name: 'tmpl',
   components: {  },
   data: () => ({
     

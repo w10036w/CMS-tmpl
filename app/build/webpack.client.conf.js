@@ -5,7 +5,7 @@ const base = require('./webpack.base.conf')
 const SWPrecachePlugin = require('sw-precache-webpack-plugin')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 // TODO: uncomment it when want to see visualizatiion
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const config = merge(base, {
   entry: {
@@ -42,7 +42,7 @@ const config = merge(base, {
     }),
     new VueSSRClientPlugin(),
     // TODO: uncomment it when want to see visualizatiion
-    //new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ]
 })
 

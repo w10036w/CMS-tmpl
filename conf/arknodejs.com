@@ -118,7 +118,7 @@ server {
 server {
   listen                80;
   server_name           admin.arknodejs.com;
-return                  301 https://$server_name$request_uri;
+  return                301 https://$server_name$request_uri;
 }
 server {
   charset               utf-8;

@@ -8,13 +8,13 @@
 <script>
 import AsideMenu from '@c/AsideMenu'
 import NavMenu from '@c/NavMenu'
-import MobileDetect from 'mobile-detect'
+// import MobileDetect from 'mobile-detect'
 
 export default {
   components: { NavMenu, AsideMenu },
   beforeMount () {
-    const md = new MobileDetect(window.navigator.userAgent)
-    this.$store.dispatch('set_mobile_detect', md)
+    // const md = new MobileDetect(window.navigator.userAgent)
+    // this.$store.dispatch('set_mobile_detect', md)
   }
 }  
 </script>

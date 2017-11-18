@@ -18,17 +18,11 @@ export default {
       authed: 'auth/authed'
     }),
   },
-  props: [],
-  watch: {},
-  beforeMount () {},
   mounted () {
     if (this.authed) {
       this.$router.push({ name: 'ViewHome' })
     }
   },
-  methods: {
-
-  }
 }
 </script>
 <style lang="stylus">

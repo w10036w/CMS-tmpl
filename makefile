@@ -35,7 +35,7 @@ else ifeq ($(COLORS), 16)
     C_WHITE=\033[1;37m
 endif
 
-all: prep service clean install service-start start
+all: prep service install service-start start
 
 prep: prep-nginx prep-certbot prep-mongo prep-redis prep-nodejs prep-pm2 prep-yarn
 

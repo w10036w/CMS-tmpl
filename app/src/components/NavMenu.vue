@@ -5,7 +5,6 @@ nav.t-center.trans-3 :class="{'scroll-hide':scrollNavHide}"
   .aside-mask :class="{'active':asideToggled}" @click="toggleAside"
 </template>
 <script>
-import { mapGetters } from 'vuex'
 import mxScrollNavHide from '@m/scrollNavHide'
 
 export default {
@@ -15,29 +14,22 @@ export default {
     asideToggled: false,
     scrollNavHide: false,
   }),
-  computed: {
-    ...mapGetters(['md'])
-  },
   watch: {
     '$route' () {
-      if (this.md.mobile)
-        this.toggleAside()
+      window.innerWidth<769 && this.asideToggled && this.toggleAside()
     }
-  },
-  beforeMount () {
-    this.domAside = document.querySelector('aside')
   },
   methods: {
     toggleAside () {
-      const aside = this.domAside || document.querySelector('aside')
+      // not recommended to do so
+      if (!this.domAside) this.domAside = document.querySelector('aside')
       if (this.asideToggled) {
         this.asideToggled = false
-        aside.style.left = '-300px'
+        this.domAside.style.left = '-300px'
       } else {
-        aside.style.left = 0
         this.asideToggled = true
+        this.domAside.style.left = 0
       }
-        
     }
   }
 }

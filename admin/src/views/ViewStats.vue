@@ -1,6 +1,6 @@
 <template lang="slm">
 .view.view-home
-  .test @click="verify" Test
+  .test @click="verify" Stats Page (Empty)
 </template>
 <script>
 import { mapGetters } from 'vuex'
