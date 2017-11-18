@@ -2,12 +2,16 @@
 
 # setup variables
 ## keep the same domain name, project name and root folder name
-DOMAIN = arknodejs.com
+DOMAIN = arknodejs.dev
 ## keep the same subproject name and its pm2 process name
-DIR_APP = app 					# a.k.a pm2 name in pm2-*.json
+# a.k.a pm2 name in pm2-*.json
+DIR_APP = app
 DIR_API = api
 DIR_ADMIN = admin
 DIR_PROFILE = profile
+DIR_APP_ROOT = /usr/local/var/www/$(DOMAIN)
+DIR_NGINX = /usr/local/etc/nginx
+PM = brew
 
 COLORS:=$(shell tput colors 2> /dev/null)
 ifeq ($(COLORS), 256)
@@ -46,12 +50,11 @@ endif
 prep-nginx:
 ifeq (, $(shell which nginx))
 	@echo "$(C_BLUE)nginx installing...$(C_RESET)"
-	@apt-get update
-	@apt-get install nginx
+	@$(PM) update
+	@$(PM) install nginx
 endif
 	@echo "$(C_GREEN)nginx installed$(C_RESET)"
-	@cp -b /var/www/$(DOMAIN)/conf/$(DOMAIN) /etc/nginx/sites-available/
-	@ln -s /etc/nginx/sites-available/$(DOMAIN) /etc/nginx/sites-enabled/$(DOMAIN)
+	@cp -b $(DIR_APP_ROOT)/conf/$(DOMAIN) $(DIR_NGINX)/sites/
 	@echo "$(C_GREEN)nginx configured$(C_RESET)"
 
 prep-certbot:
@@ -62,7 +65,7 @@ ifeq (, $(shell which certbot))
 	@apt-get update && apt-get install certbot
 endif
 	@echo "$(C_GREEN)certbot installed$(C_RESET)"
-	@certbot certonly --standalone -d $(DOMAIN)
+	@certbot certonly --standalone -d $(DOMAIN) -d api.$(DOMAIN) -d admin.$(DOMAIN)  -d www.$(DOMAIN) -d profile.$(DOMAIN) -d deploy.$(DOMAIN)
 	@echo "$(C_GREEN)certbot certificate generated$(C_RESET)"
 	
 prep-mongo:
@@ -82,10 +85,11 @@ ifeq (, $(shell which redis-server))
 endif 
 	@echo "$(C_GREEN)redis installed$(C_RESET)"
 
+## TODO: install nvm 
 prep-nodejs:
 ifeq (, $(shell which node))
 	@echo "$(C_BLUE)nodejs installing...$(C_RESET)"
-	@curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+	@curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 	@apt-get install -y nodejs
 endif
 	@echo "$(C_GREEN)nodejs installed$(C_RESET)"
@@ -119,37 +123,29 @@ test:
 ### exploring parallel solutions
 ### https://stackoverflow.com/questions/23814510/multi-threaded-make
 clean:
-	@rm -rf $(DIR_API)/node_modules
-	@rm -rf $(DIR_APP)/node_modules
-	@rm -rf $(DIR_ADMIN)/node_modules
-	@rm -rf $(DIR_PROFILE)/node_modules
+	@rm -rf $(DIR_APP_ROOT)/$(DIR_API)/node_modules
+	@rm -rf $(DIR_APP_ROOT)/$(DIR_APP)/node_modules
+	@rm -rf $(DIR_APP_ROOT)/$(DIR_ADMIN)/node_modules
+	@rm -rf $(DIR_APP_ROOT)/$(DIR_PROFILE)/node_modules
 	@echo	"node_modules clean complete"
-
-build:
-	@cd $(DIR_APP) && npm i --only=production && npm run build
-	@cd ../$(DIR_ADMIN) && npm i --only=production && npm run build
-	@cd ../$(DIR_PROFILE) && npm i --only=production && npm run build
-	@echo	"production build complete"
-### split build later 
 
 start: start-api start-app 
 start-api:
 	@echo "start $(DIR_API)"
-	@cd $(DIR_API) && pm2 start pm2-prod.json
-	@cd ..
+	@cd $(DIR_APP_ROOT)/$(DIR_API) && pm2 start pm2-prod.json
 start-app:
 	@echo "start $(DIR_APP)"
-	@cd $(DIR_APP) && pm2 start pm2-prod.json
-	@cd ..
-
+	@cd $(DIR_APP_ROOT)/$(DIR_APP) && pm2 start pm2-prod.json
 end:
 	@pm2 stop api app
 
 kill:
 	@pm2 kill
 
-restart:
-	@pm2 restart $(DIR_APP) $(DIR_API)
+update: clean build restart-app-api
+
+restart-app-api:
+	@cd $(DIR_APP_ROOT) && pm2 restart $(DIR_APP) $(DIR_API)
 
 version:
 	@nginx -v

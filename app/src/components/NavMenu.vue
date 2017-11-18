@@ -20,7 +20,8 @@ export default {
   },
   watch: {
     '$route' () {
-      this.toggleAside()
+      if (this.md.mobile)
+        this.toggleAside()
     }
   },
   beforeMount () {

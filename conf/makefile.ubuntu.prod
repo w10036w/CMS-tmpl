@@ -8,6 +8,9 @@ DIR_APP = app 					# a.k.a pm2 name in pm2-*.json
 DIR_API = api
 DIR_ADMIN = admin
 DIR_PROFILE = profile
+DIR_APP_ROOT = /var/www/$(DOMAIN)
+DIR_NGINX = /etc/nginx
+PM = apt-get
 
 COLORS:=$(shell tput colors 2> /dev/null)
 ifeq ($(COLORS), 256)
@@ -44,8 +47,8 @@ ifeq (, $(shell which nginx))
 endif
 	@echo "$(C_GREEN)nginx installed$(C_RESET)"
 	@echo "$(C_BLUE)copy nginx configuration ...$(C_RESET)"
-	@cp -b /var/www/$(DOMAIN)/conf/$(DOMAIN) /etc/nginx/sites-available/
-	@ln -s /etc/nginx/sites-available/$(DOMAIN) /etc/nginx/sites-enabled/$(DOMAIN)
+	@cp -b $(DIR_APP_ROOT)/conf/$(DOMAIN) $(DIR_NGINX)/sites-available/
+	@ln -s $(DIR_NGINX)/sites-available/$(DOMAIN) $(DIR_NGINX)/sites-enabled/$(DOMAIN)
 	@echo "$(C_GREEN)nginx configured$(C_RESET)"
 
 prep-certbot:
@@ -56,7 +59,7 @@ ifeq (, $(shell which certbot))
 	@apt-get update && apt-get install certbot
 endif
 	@echo "$(C_GREEN)certbot installed$(C_RESET)"
-	@certbot certonly --standalone -d $(DOMAIN) -d api.$(DOMAIN) -d admin.$(DOMAIN)  -d www.$(DOMAIN) -d profile.$(DOMAIN)
+	@certbot certonly --standalone -d $(DOMAIN) -d api.$(DOMAIN) -d admin.$(DOMAIN)  -d www.$(DOMAIN) -d profile.$(DOMAIN) -d deploy.$(DOMAIN)
 	@echo "$(C_GREEN)certbot certificate generated$(C_RESET)"
 	
 prep-mongo:
@@ -117,41 +120,38 @@ test:
 	@echo "$(C_BLUE)<-- nginx test start -->$(C_RESET)"
 	@systemctl status nginx
 	@nginx -t
-	@echo "$(C_BLUE)<-- nginx test end -->$(C_RESET)"
+	@echo "$(C_GREEN)<-- nginx test end -->$(C_RESET)"
 
 ### exploring parallel solutions
 ### https://stackoverflow.com/questions/23814510/multi-threaded-make
 clean:
-	@rm -rf $(DIR_API)/node_modules
-	@rm -rf $(DIR_APP)/node_modules
-	@rm -rf $(DIR_ADMIN)/node_modules
-	@rm -rf $(DIR_PROFILE)/node_modules
+	@rm -rf $(DIR_APP_ROOT)/$(DIR_API)/node_modules
+	@rm -rf $(DIR_APP_ROOT)/$(DIR_APP)/node_modules
+	@rm -rf $(DIR_APP_ROOT)/$(DIR_ADMIN)/node_modules
+	@rm -rf $(DIR_APP_ROOT)/$(DIR_PROFILE)/node_modules
 	@echo	"node_modules clean complete"
 
-build:
-	@cd $(DIR_APP) && npm i --only=production && npm run build
-	@cd ../$(DIR_ADMIN) && npm i --only=production && npm run build
-	@cd ../$(DIR_PROFILE) && npm i --only=production && npm run build
-	@echo	"production build complete"
-### split build later 
+build: 
+	@echo "$(C_BLUE)building project...$(C_RESET)"
+	@make build-app build-api
+	@echo "$(C_GREEN)project built$(C_RESET)"
+
+#build-api:
+#	@cd $(DIR_APP_ROOT)/$(DIR_API) && npm i --only=production
+#	@echo "$(C_GREEN)$(DIR_API) ready$(C_RESET)"
 
 start: start-api start-app 
 start-api:
 	@echo "start $(DIR_API)"
-	@cd $(DIR_API) && pm2 start pm2-prod.json
-	@cd ..
+	@cd $(DIR_APP_ROOT)/$(DIR_API) && pm2 start pm2-prod.json
 start-app:
 	@echo "start $(DIR_APP)"
-	@cd $(DIR_APP) && pm2 start pm2-prod.json
-	@cd ..
+	@cd $(DIR_APP_ROOT)/$(DIR_APP) && pm2 start pm2-prod.json
 end:
 	@pm2 stop api app
 
 kill:
 	@pm2 kill
-
-restart:
-	@pm2 restart $(DIR_APP) $(DIR_API)
 
 version:
 	@nginx -v

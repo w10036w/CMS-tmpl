@@ -37,3 +37,4 @@ Source of personal website [arknodejs.com](https://arknodejs.com), including 3 p
 - [ ] Other Comments Plugin
 - [ ] Admin Dashboard
 - [ ] Server push notification
+- [ ] Add prebuild test for applications

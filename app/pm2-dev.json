@@ -1,5 +1,5 @@
 {
   "name": "dev",
   "script": "npm",
-  "args": "run start:dev"
+  "args": "run dev"
 }

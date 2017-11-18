@@ -33,7 +33,6 @@ export function createRouter () {
       { path: '/', name: 'ViewHome', component: ViewArticles },
       { path: '/category/:path', name: 'ViewArticlesByCategory', component: ViewArticles },
       { path: '/tag/:path', name: 'ViewArticlesByTag', component: ViewArticles },
-      { path: '/archive', name: 'ViewArchive', component: ViewArticles },
       { path: '/article/:path', name: 'ViewArticle', component: ViewArticle },
       { path: '/tags', name: 'ViewTags', component: ViewTags },
       { path: '/categories', name: 'ViewCategories', component: ViewCategories },

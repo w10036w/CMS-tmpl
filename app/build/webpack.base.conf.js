@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 const isProd = process.env.NODE_ENV === 'production'
-const data_env = process.env.DATA_ENV || 'dev'
+const env = process.env.NODE_ENV || 'development'
 
 module.exports = {
   devtool: isProd
@@ -30,7 +30,7 @@ module.exports = {
       '@p': path.resolve(__dirname, '../src/pages'),
       '@a': path.resolve(__dirname, '../src/api'),
       '@m': path.resolve(__dirname, '../src/mixin'),
-      '@config': path.resolve(__dirname, '../config/'+data_env),
+      '@config': path.resolve(__dirname, '../config/'+env),
     }
   },
   module: {

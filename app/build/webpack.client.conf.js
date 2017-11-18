@@ -4,7 +4,6 @@ const merge = require('webpack-merge')
 const base = require('./webpack.base.conf')
 const SWPrecachePlugin = require('sw-precache-webpack-plugin')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
-
 // TODO: uncomment it when want to see visualizatiion
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -62,26 +61,10 @@ if (process.env.NODE_ENV === 'production') {
           urlPattern: '/',
           handler: 'networkFirst'
         },
-        // {
-        //   urlPattern: /\/(fashion|beauty|lifestyle)/,
-        //   handler: 'networkFirst'
-        // },
         {
-          urlPattern: '/fashion/:topic',
+          urlPattern: /\/(article|category|categories|tag|tags|about)/,
           handler: 'networkFirst'
         },
-        {
-          urlPattern: '/beauty/:topic',
-          handler: 'networkFirst'
-        },
-        {
-          urlPattern: '/culture/:topic',
-          handler: 'networkFirst'
-        },
-        {
-          urlPattern: '/inspiring-stories/:topic',
-          handler: 'networkFirst'
-        }
       ]
     })
   )

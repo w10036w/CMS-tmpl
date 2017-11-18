@@ -7,10 +7,9 @@ const resolve = file => path.resolve(__dirname, file)
 const { createBundleRenderer } = require('vue-server-renderer')
 
 const useMicroCache = process.env.MICRO_CACHE === 'true'
-const node_env = process.env.NODE_ENV || 'dev'
-const isProd = node_env === 'production'
-const data_env = process.env.DATA_ENV || 'dev'
-const config = require('./config/'+data_env)
+const env = process.env.NODE_ENV || 'development'
+const isProd = env === 'production'
+const config = require('./config/'+env)
 
 // when has no control of nginx, proxy api request here
 // const proxy = require('./proxy')
@@ -146,5 +145,5 @@ app.get('*', isProd ? render : (req, res) => {
 
 const port = config.port
 app.listen(port, () => {
-  console.log(`[env=${node_env.toUpperCase()}][data=${data_env.toUpperCase()}] Server running at ${port}`)
+  console.log(`[env=${env.toUpperCase()}] Server running at ${port}`)
 })
