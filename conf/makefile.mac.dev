@@ -126,8 +126,7 @@ clean:
 	@echo	"node_modules clean complete"
 
 build:
-	@cd $(DIR_API) && npm i --only=production && npm run build
-	@cd ../$(DIR_APP) && npm i --only=production && npm run build
+	@cd $(DIR_APP) && npm i --only=production && npm run build
 	@cd ../$(DIR_ADMIN) && npm i --only=production && npm run build
 	@cd ../$(DIR_PROFILE) && npm i --only=production && npm run build
 	@echo	"production build complete"
