@@ -44,7 +44,7 @@ ifeq (, $(shell which nginx))
 endif
 	@echo "$(C_GREEN)nginx installed$(C_RESET)"
 	@echo "$(C_BLUE)copy nginx configuration ...$(C_RESET)"
-	@cp -b /var/www/$(DOMAIN)/config/$(DOMAIN) /etc/nginx/sites-available/
+	@cp -b /var/www/$(DOMAIN)/conf/$(DOMAIN) /etc/nginx/sites-available/
 	@ln -s /etc/nginx/sites-available/$(DOMAIN) /etc/nginx/sites-enabled/$(DOMAIN)
 	@echo "$(C_GREEN)nginx configured$(C_RESET)"
 
