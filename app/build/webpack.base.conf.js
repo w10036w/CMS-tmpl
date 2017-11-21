@@ -1,11 +1,13 @@
 const path = require('path')
 const webpack = require('webpack')
 const vueConfig = require('./vue-loader.config')
+// const HTMLPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+// const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
-const isProd = process.env.NODE_ENV === 'production'
 const env = process.env.NODE_ENV || 'development'
+const isProd = env === 'production'
 
 module.exports = {
   devtool: isProd
@@ -46,7 +48,7 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
@@ -84,9 +86,9 @@ module.exports = {
         new webpack.optimize.UglifyJsPlugin({
           compress: { warnings: false }
         }),
-        new ExtractTextPlugin({
-          filename: 'common.[chunkhash].css'
-        })
+        // new HTMLPlugin(),
+        new ExtractTextPlugin({ filename: 'common.[chunkhash].css' }),
+        // new StyleExtHtmlWebpackPlugin({ position: 'head-bottom' })
       ]
     : [
         new FriendlyErrorsPlugin()

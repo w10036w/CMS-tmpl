@@ -41,8 +41,13 @@ export default {
   meta () {
     const title = this.name + ' | Arknodejs'
     const description = 'Sorted articles'
-    return {
-      title, description
+    return { 
+      title, 
+      'og:title': title,
+      description,
+      'og:description': description,
+      'og:type': 'article',
+      'og:url': `https://arknodejs.com${this.$route.path}`
     }
   },
   computed: {

@@ -5,6 +5,7 @@ const express = require('express')
 const favicon = require('serve-favicon')
 const resolve = file => path.resolve(__dirname, file)
 const { createBundleRenderer } = require('vue-server-renderer')
+const fnGA = require('./src/utils/googleAnalytics')
 
 const useMicroCache = process.env.MICRO_CACHE === 'true'
 const env = process.env.NODE_ENV || 'development'
@@ -118,17 +119,20 @@ function render (req, res) {
       return res.end(hit)
     }
   }
-
+  const url = req.url
   const context = {
     meta: {
       title: 'Arknodejs'
     }, // default website name
-    url: req.url
+    url
   }
   renderer.renderToString(context, (err, html) => {
-    if (err) {
-      return handleError(err)
-    }
+    if (err) { return handleError(err) }
+    const matchedPattern = html.match(/<title>(.*)<\/title>/)
+    const title = matchedPattern[1] || context.meta.title
+    const cid = req.cookies && req.cookies.ga_cid
+    fnGA({ title, url, cid }, req, res)
+
     res.end(html)
     if (cacheable) {
       microCache.set(req.url, html)

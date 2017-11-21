@@ -42,8 +42,16 @@ export default {
     disqusUpdate: 0
   }),
   meta () {
-    return { title: (this.article && this.article.title) + ' | Arknodejs' }
-    //return 'ok'
+    const title = (this.article && this.article.title) + ' | Arknodejs' 
+    const description = 'article from Arknodejs.com'
+    return { 
+      title,
+      'og:title': title,
+      description,
+      'og:description': description,
+      'og:type': 'article',
+      'og:url': `https://arknodejs.com${this.$route.path}`
+    }
   },
   computed: {
     ...mapGetters(['article_ctx', 'article']),

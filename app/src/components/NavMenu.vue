@@ -5,10 +5,10 @@ nav.t-center.trans-3 :class="{'scroll-hide':scrollNavHide}"
   .aside-mask :class="{'active':asideToggled}" @click="toggleAside"
 </template>
 <script>
-import mxScrollNavHide from '@m/scrollNavHide'
+// import mxScrollNavHide from '@m/scrollNavHide'
 
 export default {
-  mixins: [mxScrollNavHide],
+  // mixins: [mxScrollNavHide],
   data: () => ({
     domAside: null,
     asideToggled: false,

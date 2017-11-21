@@ -4,16 +4,23 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 // dynamic pages
-const ViewArticles = () => import('@v/ViewArticles')
-const ViewArticle = () => import('@v/ViewArticle')
-//const ViewArchive = () => import('@v/ViewArchive')
-const ViewTags = () => import('@v/ViewTags')
-const ViewCategories = () => import('@v/ViewCategories')
-const ViewSearch = () => import('@v/ViewSearch')
-
+// const ViewArticles = () => import('@v/ViewArticles')
+// const ViewArticle = () => import('@v/ViewArticle')
+// const ViewTags = () => import('@v/ViewTags')
+// const ViewCategories = () => import('@v/ViewCategories')
+// const ViewSearch = () => import('@v/ViewSearch')
+// // static pages
+// const PageAbout = () => import('@p/PageAbout')
+// const PageError = () => import('@p/PageError')
+// dynamic pages
+import ViewArticles from '@v/ViewArticles'
+import ViewArticle from '@v/ViewArticle'
+import ViewTags from '@v/ViewTags'
+import ViewCategories from '@v/ViewCategories'
+import ViewSearch from '@v/ViewSearch'
 // static pages
-const PageAbout = () => import('@p/PageAbout')
-const PageError = () => import('@p/PageError')
+import PageAbout from '@p/PageAbout'
+import PageError from '@p/PageError'
 
 export function createRouter () {
   return new Router({

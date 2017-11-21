@@ -1,3 +1,4 @@
+const path = require('path')
 const glob = require('glob')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
@@ -51,20 +52,47 @@ if (process.env.NODE_ENV === 'production') {
   config.plugins.push(
     // auto generate service worker
     new SWPrecachePlugin({
-      cacheId: 'elle2',
+      cacheId: 'arknodejs.com',
       filename: 'service-worker.js',
       minify: true,
-      dontCacheBustUrlsMatching: /./,
-      staticFileGlobsIgnorePatterns: [/\.map$/, /\.json$/],
+      dontCacheBustUrlsMatching: false,
+      mergeStaticsConfig: true,
+      staticFileGlobs: [
+        path.join(__dirname, '../public/*.*')
+      ],
+      stripPrefixMulti: {
+        [path.join(__dirname, '../dist')]: '/dist'
+      },
+      staticFileGlobsIgnorePatterns: [
+        /\.map$/, 
+        /\.json$/],
       runtimeCaching: [
         {
-          urlPattern: '/',
-          handler: 'networkFirst'
+          // never cache service worker
+          urlPattern: /service-worker.js/,
+          handler: 'networkOnly'
         },
         {
-          urlPattern: /\/(article|category|categories|tag|tags|about)/,
-          handler: 'networkFirst'
+          // note that this pattern will cache ajax request
+          urlPattern: /(.+\/[^\.]*$)/,
+          handler: 'networkFirst',
+          options: {
+            cache: {
+              maxEntries: 30,
+              name: 'arknodejs-runtime-cache'
+            }
+          }
         },
+        {
+          urlPattern: /\.(png|jpe?g|webp|gif)/,
+          handler: 'cacheFirst',
+          options: {
+            cache: {
+              maxEntries: 20,
+              name: 'arknodejs-image-cache'
+            }
+          }
+        }
       ]
     })
   )

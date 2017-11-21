@@ -13,8 +13,9 @@ function connect (uri) {
         log.info('[MONGO] connected.');
         return resolve(mongoose.connections[0])
       });
-
-    mongoose.connect(uri);
+    mongoose.connect(`mongodb://${uri}`, {
+      useMongoClient: true,
+    });
   });
 }
 async function initAdmin () {

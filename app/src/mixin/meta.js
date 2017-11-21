@@ -1,6 +1,10 @@
+// const _meta = {
+//   property: ['og:title', 'og:image', 'og:url', 'og:type', 'og:description'],
+//   name: ['description', 'twitter:description'],
+// }
 const _meta = {
-  property: ['og:title', 'og:image', 'og:url', 'og:type', 'og:description'],
-  name: ['description', 'twitter:description'],
+  property: ['og:title', 'og:url', 'og:type', 'og:description'],
+  name: ['description'],
 }
 function getMeta (vm) {
   const { meta } = vm.$options

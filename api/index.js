@@ -1,9 +1,9 @@
 global.Promise = require("bluebird")
 global.resolve = name => require(`${__dirname}/${name}`)
 
-// // pm2 conflicts with log4js
+// // pm2 conflicts with log4js save to file
 // //winston.add(winston.transports.File, { filename: './logs/app.log' });
-global.log = process.env.TEST ? console : require('./util/log')
+global.log = require('./util/log')
 
 global.conf = require('./conf')
 const mongo = require('./mongo')
