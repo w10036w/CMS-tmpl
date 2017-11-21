@@ -52,26 +52,12 @@ if (process.env.NODE_ENV === 'production') {
   config.plugins.push(
     // auto generate service worker
     new SWPrecachePlugin({
-      cacheId: 'arknodejs.com',
+      cacheId: 'arknodejs',
       filename: 'service-worker.js',
       minify: true,
-      dontCacheBustUrlsMatching: false,
-      mergeStaticsConfig: true,
-      staticFileGlobs: [
-        path.join(__dirname, '../public/*.*')
-      ],
-      stripPrefixMulti: {
-        [path.join(__dirname, '../dist')]: '/dist'
-      },
-      staticFileGlobsIgnorePatterns: [
-        /\.map$/, 
-        /\.json$/],
+      dontCacheBustUrlsMatching: /./,
+      staticFileGlobsIgnorePatterns: [/\.map$/, /\.json$/],
       runtimeCaching: [
-        {
-          // never cache service worker
-          urlPattern: /service-worker.js/,
-          handler: 'networkOnly'
-        },
         {
           // note that this pattern will cache ajax request
           urlPattern: /(.+\/[^\.]*$)/,
@@ -92,7 +78,11 @@ if (process.env.NODE_ENV === 'production') {
               name: 'arknodejs-image-cache'
             }
           }
-        }
+        },
+        // {
+        //   urlPattern: '/',
+        //   handler: 'networkFirst'
+        // },
       ]
     })
   )
