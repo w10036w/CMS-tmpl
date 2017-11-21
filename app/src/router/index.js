@@ -46,7 +46,7 @@ export function createRouter () {
       { path: '/search', name: 'ViewSearch', component: ViewSearch },
       { path: '/about', name: 'PageAbout', redirect: '/article/about' },
       { path: '/error', name: 'PageError', component: PageError },
-      { path: '*', redirect: '/error' },
+      // { path: '*', redirect: '/error' },
     ]
   })
 }

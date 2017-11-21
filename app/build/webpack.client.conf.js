@@ -59,6 +59,11 @@ if (process.env.NODE_ENV === 'production') {
       staticFileGlobsIgnorePatterns: [/\.map$/, /\.json$/],
       runtimeCaching: [
         {
+          // never cache service worker
+          urlPattern: /service-worker.js/,
+          handler: 'networkOnly'
+        },
+        {
           // note that this pattern will cache ajax request
           urlPattern: /(.+\/[^\.]*$)/,
           handler: 'networkFirst',

@@ -1,5 +1,5 @@
 // borrow from https://github.com/smallpath/blog/blob/master/front/middleware/serverGoogleAnalytic.js
-const { ga } = require('../../config')
+const { ga } = require('./config')
 const request = require('axios')
 const EMPTY_GIF = new Buffer('R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw==', 'base64')
 const uuid = require('uuid')
@@ -12,7 +12,8 @@ const getClientIp = req => {
   return matched ? matched[0] : req.ip
 }
 
-module.exports = ({ title, url, cid }, req, res) => {
+module.exports = (req, res, next, opts) => {
+  let { title, cid, url } = opts
   if (!ga.id) return console.error('No GA Id')
   const now = Date.now()
   if (!cid) {
