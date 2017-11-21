@@ -69,12 +69,12 @@ const serve = (path, cache) => express.static(resolve(path), {
 
 // app.use(favicon('./public/ico/favicon.ico'))
 
-app.use('/dist', serve('./dist', true))
 
 app.use('/public', serve('./public', true))
 app.use('/manifest.json', serve('./manifest.json', true))
 app.use('/robots.txt', serve('./robots.txt', true))
 app.use('/service-worker.js', serve('./dist/service-worker.js'))
+app.use('/dist', serve('./dist', true))
 
 // 1-second microcache.
 // https://www.nginx.com/blog/benefits-of-microcaching-nginx/
