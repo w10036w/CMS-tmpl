@@ -40,7 +40,7 @@ export function loadScript(e) {
     return Promise.all(promises).then(d => d).catch(e => e)
   }
   if (scripts[e])return scripts[e];
-  let p = new Promise((resolve, reject) => {
+  var p = new Promise((resolve, reject) => {
     var r = false,
       h = document.getElementsByTagName("head")[0],
       s = document.createElement("script");

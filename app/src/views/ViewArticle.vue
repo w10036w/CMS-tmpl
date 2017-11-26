@@ -59,9 +59,6 @@ export default {
       return this.article.html//.replace(/\n/g, '<br>')//.replace(/\s/g, '\b')
     }
   },
-  created () {
-    console.log('in view article')
-  },
   watch: {
     '$route.params.path' () {
       // trigger disqus update

@@ -28,6 +28,7 @@
     "lru-cache": "^4.0.2",
     "route-cache": "^0.4.3",
     "serve-favicon": "^2.4.1",
+    "uuid": "^3.1.0",
     "vue": "^2.5.5",
     "vue-router": "^2.5.0",
     "vue-server-renderer": "^2.5.5",

@@ -72,10 +72,11 @@ server {
   }
 
   # CSS and Javascript
+  # This could be very tricky when update the static file without hash. 
+  # Remember to disable this temporarily when update them
   location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$ {
     expires             30d;
   }
-
   location ~ .*\.(js|css)$ {
     expires             10d;
   }

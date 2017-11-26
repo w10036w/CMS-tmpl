@@ -3,10 +3,10 @@ const path = require('path')
 const LRU = require('lru-cache')
 const express = require('express')
 const microcache = require('route-cache')
+const uuid = require('uuid/v4')
 const { createBundleRenderer } = require('vue-server-renderer')
 
 const resolve = file => path.resolve(__dirname, file)
-const ga = require('./ga')
 const useMicroCache = process.env.MICRO_CACHE !== 'false'
 const env = process.env.NODE_ENV || 'development'
 const isProd = env === 'production'
@@ -67,11 +67,10 @@ const serve = (path, cache) => express.static(resolve(path), {
   maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
 })
 
-// app.use('/service-worker.js', serve('./dist/service-worker.js'))
-app.use('/service-worker.js', serve('dist/service-worker.js'))
+app.use('/service-worker.js', serve('./dist/service-worker.js'))
 app.use('/dist', serve('./dist', true))
 app.use('/public', serve('./public', true))
-app.use('/_.gif', (req, res) => ga(req, res, null, {}))
+app.use('/_.gif', (req, res) => ga(req, res))
 app.use('/robots.txt', serve('./robots.txt', true))
 
 // since this app has no user-specific content, every page is micro-cacheable.
@@ -84,23 +83,22 @@ app.use(microcache.cacheSeconds(1, req => useMicroCache && req.originalUrl))
 
 function render (req, res) {
   const s = Date.now()
-
   res.setHeader("Content-Type", "text/html")
   res.charset = 'UTF-8';
   res.setHeader("Server", serverInfo)
-
-  // const handleError = err => {
-  //   if (err.url) {
-  //     res.redirect(err.url)
-  //   } else if(err.code === 404) {
-  //     res.status(404).end('404 | Page Not Found')
-  //   } else {
-  //     // Render Error Page or Redirect
-  //     res.status(500).end('500 | Internal Server Error')
-  //     console.error(`error during render : ${req.url}`)
-  //     console.error(err.stack)
-  //   }
-  // }
+  const handleError = err => {
+    // if (err.url) {
+    //   res.redirect(err.url)
+    // } else if(err.code === 404) {
+    //   res.status(404).end('404 | Page Not Found')
+    // } else {
+    //   // Render Error Page or Redirect
+    //   res.status(500).end('500 | Internal Server Error')
+    //   console.error(`error during render : ${req.url}`)
+    //   console.error(err.stack)
+    // }
+    res.redirect('/error')
+  }
 
   const url = req.url
   const context = {
@@ -111,11 +109,6 @@ function render (req, res) {
   }
   renderer.renderToString(context, (err, html) => {
     if (err) { return handleError(err) }
-    const re = html.match(/<title>(.*)<\/title>/)
-    const title = re[1] || context.meta.title
-    const cid = req.cookies && req.cookies.ga_cid
-    ga(req, res, null, { title, url, cid })
-
     res.end(html)
     if (!isProd) {
       console.log(`whole request: ${Date.now() - s}ms`)
